@@ -68,10 +68,19 @@
 
   footer{padding:32px 0;border-top:1px solid var(--line);font-size:0.85rem;color:var(--ink-dim);}
   footer a{color:var(--cyan);text-decoration:none;}
+
+  #signalCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block;}
+  .signal-label{position:fixed;left:24px;bottom:16px;z-index:1;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-dim);opacity:0.55;pointer-events:none;}
+  .page{position:relative;z-index:1;}
+  header.hero{background:radial-gradient(ellipse 900px 500px at 15% 0%, rgba(74,154,165,0.14), transparent 60%);}
 </style>
 </head>
 <body>
 
+<canvas id="signalCanvas"></canvas>
+<div class="signal-label">Behavioural signal &middot; illustrative</div>
+
+<div class="page">
 <nav>
   <div class="wrap">
     <div class="brand"><img src="/aria-logo-2.png" alt="ARIA"></div>
@@ -144,6 +153,8 @@
   </div>
 </footer>
 
+</div>
+
 <script>
 async function doHash(){
   const val = document.getElementById('hashInput').value;
@@ -152,6 +163,144 @@ async function doHash(){
   const hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
   document.getElementById('hashOut').textContent = hex;
 }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  const canvas = document.getElementById('signalCanvas');
+  if (!canvas || typeof THREE === 'undefined') { if(canvas) canvas.style.display='none'; return; }
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const scene = new THREE.Scene();
+  let W = window.innerWidth, H = window.innerHeight;
+  const camera = new THREE.PerspectiveCamera(42, W/H, 0.1, 100);
+  camera.position.set(9, 5.5, 13);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(W, H);
+
+  // Brand gradient: teal -> cyan -> green
+  const cTeal = new THREE.Color(0x4a9aa5), cCyan = new THREE.Color(0x71bcc8), cGreen = new THREE.Color(0x67956e);
+  const cNavyGhost = new THREE.Color(0x1b3a3e);
+
+  const COUNT = 130;
+  const SPAN = 14;
+
+  function vortexPoint(t){
+    const turns = 2.1;
+    const theta = t * turns * Math.PI * 2;
+    const decay = 2.6;
+    const r = 5.2 * Math.exp(-decay * t);
+    return new THREE.Vector3(Math.cos(theta) * r, (t - 0.5) * 1.2, Math.sin(theta) * r);
+  }
+  function wavePoint(t){
+    const x = t * SPAN - SPAN/2;
+    const y = Math.sin(t * Math.PI * 4.2) * 1.9 * (0.35 + 0.65*Math.sin(t*Math.PI));
+    const z = Math.cos(t * Math.PI * 2.4) * 2.2;
+    return new THREE.Vector3(x, y, z);
+  }
+  function colorFor(t){
+    return t < 0.5 ? cTeal.clone().lerp(cCyan, t/0.5) : cCyan.clone().lerp(cGreen, (t-0.5)/0.5);
+  }
+  function easeInOutCubic(x){ return x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2,3)/2; }
+
+  const geo = new THREE.SphereGeometry(0.09, 12, 12);
+  const primary = [];
+  const vortexPts = [], wavePts = [];
+
+  for (let i = 0; i < COUNT; i++) {
+    const t = i / (COUNT - 1);
+    vortexPts.push(vortexPoint(t));
+    wavePts.push(wavePoint(t));
+    const mat = new THREE.MeshBasicMaterial({ color: colorFor(t), transparent:true, opacity:0.85 });
+    const sphere = new THREE.Mesh(geo, mat);
+    sphere.position.copy(vortexPts[i]);
+    sphere.scale.setScalar(0.55 + 0.55*Math.sin(t*Math.PI));
+    scene.add(sphere);
+    primary.push(sphere);
+  }
+
+  const ghostLayers = [];
+  if (!reduceMotion){
+    [0.14, 0.28].forEach((lag, gi) => {
+      const meshes = [];
+      for (let i = 0; i < COUNT; i++){
+        const t = i / (COUNT - 1);
+        const mat = new THREE.MeshBasicMaterial({ color: cNavyGhost, transparent:true, opacity: 0.12 - gi*0.04 });
+        const s = new THREE.Mesh(geo, mat);
+        s.position.copy(vortexPts[i]);
+        s.scale.setScalar((0.55 + 0.55*Math.sin(t*Math.PI)) * (0.9 - gi*0.15));
+        scene.add(s);
+        meshes.push(s);
+      }
+      ghostLayers.push({ lag, meshes });
+    });
+  }
+
+  const grid = new THREE.GridHelper(16, 16, 0x4a9aa5, 0x1b3a3e);
+  grid.position.y = -3;
+  grid.material.transparent = true;
+  grid.material.opacity = 0.08;
+  scene.add(grid);
+
+  function axisLine(dir, color){
+    const mat = new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.14 });
+    const points = [dir.clone().multiplyScalar(-8), dir.clone().multiplyScalar(8)];
+    const g = new THREE.BufferGeometry().setFromPoints(points);
+    return new THREE.Line(g, mat);
+  }
+  scene.add(axisLine(new THREE.Vector3(1,0,0), 0x71bcc8));
+  scene.add(axisLine(new THREE.Vector3(0,1,0), 0x67956e));
+  scene.add(axisLine(new THREE.Vector3(0,0,1), 0x4a9aa5));
+
+  function onResize(){
+    W = window.innerWidth; H = window.innerHeight;
+    camera.aspect = W/H; camera.updateProjectionMatrix();
+    renderer.setSize(W, H);
+  }
+  window.addEventListener('resize', onResize);
+
+  let visible = true;
+  document.addEventListener('visibilitychange', () => { visible = !document.hidden; });
+
+  const DURATION = 4200;
+  const start = performance.now();
+  let settledRotation = 0;
+
+  function setLayer(meshes, p){
+    const eased = easeInOutCubic(p);
+    for (let i = 0; i < COUNT; i++){
+      meshes[i].position.lerpVectors(vortexPts[i], wavePts[i], eased);
+    }
+  }
+
+  function animate(now){
+    requestAnimationFrame(animate);
+    if (!visible) return;
+
+    if (reduceMotion){
+      setLayer(primary, 1);
+      renderer.render(scene, camera);
+      return;
+    }
+
+    const elapsed = now - start;
+    const p = Math.min(1, elapsed / DURATION);
+    setLayer(primary, p);
+    ghostLayers.forEach(({lag, meshes}) => setLayer(meshes, Math.max(0, p - lag)));
+
+    if (p >= 1){
+      settledRotation += 0.0018;
+      scene.rotation.y = settledRotation;
+    }
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(animate);
+})();
 </script>
 
 </body>
