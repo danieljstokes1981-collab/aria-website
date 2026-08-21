@@ -180,9 +180,11 @@ async function doHash(){
   function frameCamera(){
     W = window.innerWidth; H = window.innerHeight;
     const aspect = W / H;
+    // Wider span needs the camera pulled back further to still fit the shape.
+    const spanScale = SPAN / 14;
     // Narrow/portrait screens need the camera pulled back much further,
     // or the same world-space shape fills far more of the frame.
-    const zoomOut = aspect < 1 ? (1 / aspect) * 1.15 : 1;
+    const zoomOut = (aspect < 1 ? (1 / aspect) * 1.15 : 1) * spanScale;
     camera.position.set(9 * zoomOut, 5.5 * zoomOut, 13 * zoomOut);
     camera.lookAt(0, 0, 0);
     camera.aspect = aspect;
@@ -197,8 +199,8 @@ async function doHash(){
   const cTeal = new THREE.Color(0x4a9aa5), cCyan = new THREE.Color(0x71bcc8), cGreen = new THREE.Color(0x67956e);
   const cNavyGhost = new THREE.Color(0x1b3a3e);
 
-  const COUNT = 130;
-  const SPAN = 14;
+  const COUNT = 170;
+  const SPAN = 24;
 
   function vortexPoint(t){
     const turns = 2.1;
