@@ -76,6 +76,7 @@
   <div class="wrap">
     <div class="brand"><img src="/aria-logo-2.png" alt="ARIA"></div>
     <ul>
+      <li><a href="#substrate">What ARIA is</a></li>
       <li><a href="#what">What it does</a></li>
       <li><a href="#proof">Live demo</a></li>
       <li><a href="powered-by.html">Powered by ARIA</a></li>
@@ -106,6 +107,13 @@
   </div>
 </header>
 
+<section id="substrate">
+  <div class="wrap">
+    <h2>What ARIA is</h2>
+    <p style="max-width:70ch;color:var(--ink-dim);font-size:1rem;">ARIA is a deterministic behavioural intelligence substrate — it observes operational and behavioural signals, evaluates them against transparent, versioned rules, and produces a governed decision together with a verifiable record of how that decision was reached. The same inputs always produce the same outputs, and the reasoning behind every decision is inspectable after the fact.</p>
+  </div>
+</section>
+
 <section id="what">
   <div class="wrap">
     <h2>What it does</h2>
@@ -117,6 +125,10 @@
       <div class="card">
         <h3>Tamper-evident by construction</h3>
         <p>Records are cryptographically hashed and can be anchored externally, so any after-the-fact alteration is detectable, not merely disallowed by policy.</p>
+      </div>
+      <div class="card">
+        <h3>Flags drift, doesn't act on it</h3>
+        <p>Part of that evaluation includes comparing current behaviour against an established baseline and surfacing meaningful deviation to a human reviewer — ARIA flags, it never acts automatically.</p>
       </div>
       <div class="card">
         <h3>Built for OEM licensing</h3>
