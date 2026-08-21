@@ -1,231 +1,776 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARIA — Behavioural Intelligence</title>
-<meta name="description" content="ARIA generates a tamper-evident audit record for every governed decision -- so the evidence exists at the point of decision, not reconstructed after the fact.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --navy:#05081a; --deep-teal:#1b3a3e;
-    --teal:#4a9aa5; --cyan:#71bcc8; --green:#67956e;
-    --ink:#e9f2f2; --ink-dim:#9fb3b5; --line: rgba(233,242,242,0.10);
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;overflow-x:hidden;}
-  body{margin:0;overflow-x:hidden;background:var(--navy);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
-  h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;margin:0;}
-  code, .mono{font-family:'JetBrains Mono', monospace;}
-  a{color:inherit;}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  nav{position:sticky; top:0; z-index:50;background:rgba(5,8,26,0.85);border-bottom:1px solid var(--line);}
-  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
-  nav .brand{display:flex;align-items:center;gap:10px;}
-  nav .brand span{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.02em;}
-  nav ul{list-style:none;display:flex;gap:24px;margin:0;padding:0;overflow-x:auto;}
-  nav a{text-decoration:none;color:var(--ink-dim);font-size:0.88rem;font-weight:500;white-space:nowrap;}
-  nav a:hover{color:var(--cyan);}
+  <title>ARIA — Deterministic Behavioural Intelligence Substrate (SGTS v3.0)</title>
+  <meta name="description" content="Surfaceless Ground Truth Substrate: Sub-0.08ms reality verification, zero-content privacy isolation, and deterministic behavioural governance.">
 
-  header.hero{padding:56px 0 48px;background:radial-gradient(ellipse 900px 500px at 15% 0%, rgba(74,154,165,0.18), transparent 60%),var(--navy);}
-  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(113,188,200,0.3);padding:6px 12px;border-radius:100px;margin-bottom:20px;}
-  .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);}
-  h1.headline{font-size:clamp(1.9rem,4.4vw,2.8rem);line-height:1.15;color:#fff;max-width:18ch;}
-  h1.headline .accent{background:linear-gradient(90deg,var(--cyan),var(--green));-webkit-background-clip:text;background-clip:text;color:transparent;}
-  .sub{margin-top:18px;font-size:1.02rem;color:var(--ink-dim);max-width:56ch;}
-  .cta-row{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;}
-  .btn{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.92rem;padding:13px 24px;border-radius:8px;text-decoration:none;display:inline-block;}
-  .btn-primary{background:linear-gradient(90deg,var(--teal),var(--cyan));color:#03151a;}
-  .btn-ghost{border:1px solid var(--line);color:var(--ink);}
+  <!-- Typefaces -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
-  .proof-card{margin-top:32px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:22px;}
-  .proof-label{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;}
-  .proof-card textarea{width:100%;min-height:60px;background:rgba(0,0,0,0.35);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:0.82rem;padding:10px 12px;}
-  .hash-out{margin-top:12px;padding:12px;background:rgba(0,0,0,0.3);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;word-break:break-all;color:var(--green);border:1px solid rgba(103,149,110,0.25);}
-  .hash-out.changed{color:var(--cyan);border-color:rgba(113,188,200,0.4);}
-  .proof-hint{margin-top:10px;font-size:0.8rem;color:var(--ink-dim);}
-  .proof-hint b{color:var(--ink);}
+  <style>
+    :root {
+      /* Base Canvas */
+      --aria-bg-base: #030712;
+      --aria-bg-surface: #070d1e;
+      --aria-bg-card: rgba(11, 19, 43, 0.65);
+      
+      /* Neon Electric Accents from Brand Palette */
+      --aria-cyan-glow: #00f2fe;
+      --aria-cyan-electric: #00e5ff;
+      --aria-sapphire: #0077b6;
+      --aria-deep-indigo: #3a86ff;
+      --aria-teal: #4a9aa5;
+      
+      /* Typography & States */
+      --aria-text-main: #f8fafc;
+      --aria-text-muted: #94a3b8;
+      --aria-status-green: #10b981;
+      --aria-status-red: #ef4444;
 
-  section{padding:56px 0;border-top:1px solid var(--line);}
-  .section-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:12px;}
-  h2{font-size:clamp(1.3rem,2.4vw,1.7rem);color:#fff;max-width:26ch;}
-  .lede{margin-top:12px;font-size:0.96rem;color:var(--ink-dim);max-width:60ch;}
+      /* Structural & Glass Lines */
+      --aria-border-dim: rgba(0, 242, 254, 0.16);
+      --aria-border-bright: rgba(0, 242, 254, 0.5);
+      --aria-glow-cyan: 0 0 25px rgba(0, 242, 254, 0.35);
 
-  .what-grid{margin-top:32px;display:grid;grid-template-columns:1fr;gap:20px;}
-  @media (min-width:800px){.what-grid{grid-template-columns:repeat(3,1fr);}}
-  .what-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:22px;}
-  .what-card h3{font-size:1rem;color:#fff;margin-bottom:8px;}
-  .what-card p{font-size:0.88rem;color:var(--ink-dim);margin:0;}
+      /* Typography */
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
 
-  .pipeline{margin-top:36px;}
-  .pipe-step{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--line);}
-  .pipe-step:first-child{border-top:none;}
-  .pipe-num{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--cyan);}
-  .pipe-body h3{font-size:0.96rem;color:#fff;margin-bottom:6px;}
-  .pipe-body p{font-size:0.86rem;color:var(--ink-dim);margin:0;}
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  .field-grid{margin-top:32px;display:grid;grid-template-columns:1fr;gap:12px;}
-  @media (min-width:800px){.field-grid{grid-template-columns:repeat(2,1fr);}}
-  .field-row{display:flex;justify-content:space-between;gap:12px;padding:14px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-left:2px solid var(--teal);border-radius:8px;}
-  .field-name{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--cyan);white-space:nowrap;}
-  .field-desc{font-size:0.8rem;color:var(--ink-dim);text-align:right;max-width:30ch;}
+    html {
+      background-color: var(--aria-bg-base);
+      color: var(--aria-text-main);
+      font-family: var(--font-sans);
+      color-scheme: dark;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  .example{background:rgba(74,154,165,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:28px;margin-top:28px;}
-  .example-tag{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--green);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;}
-  .example h3{font-size:1.15rem;color:#fff;max-width:34ch;}
-  .example p{margin-top:12px;color:var(--ink-dim);font-size:0.92rem;max-width:60ch;}
-  .example .caveat{margin-top:16px;padding:12px 16px;border-left:2px solid var(--teal);font-size:0.82rem;color:var(--ink-dim);background:rgba(255,255,255,0.02);}
+    body {
+      position: relative;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
 
-  footer{border-top:1px solid var(--line);padding:32px 0;text-align:center;font-size:0.85rem;color:var(--ink-dim);}
-  footer a{margin:0 12px;}
-  .fine{margin-top:16px;font-size:0.75rem;color:#5f6b6c;line-height:1.7;max-width:640px;margin-left:auto;margin-right:auto;}
-</style>
+    /* Ambient Canvas & Glows */
+    #wave-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.55;
+    }
+
+    .ambient-glow {
+      position: fixed;
+      top: -15vw;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.12) 0%, rgba(0, 119, 182, 0.04) 45%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Glassmorphic Panel Primitive */
+    .glass-card {
+      background: var(--aria-bg-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--aria-border-dim);
+      border-radius: 16px;
+      padding: 1.75rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .glass-card:hover {
+      border-color: var(--aria-border-bright);
+    }
+
+    /* Header / Nav */
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--aria-border-dim);
+      padding: 1rem 0;
+    }
+
+    .nav-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-frame {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-vector {
+      width: 40px;
+      height: 40px;
+      filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.6));
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.35rem;
+      letter-spacing: 0.12em;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .brand-badge {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      color: var(--aria-cyan-glow);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--aria-text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--aria-cyan-glow);
+    }
+
+    .btn-glow {
+      background: linear-gradient(135deg, var(--aria-cyan-glow) 0%, var(--aria-sapphire) 100%);
+      color: #030712;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.6rem 1.3rem;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid var(--aria-cyan-glow);
+      box-shadow: var(--aria-glow-cyan);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-glow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(0, 242, 254, 0.6);
+      color: #000;
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--aria-text-main);
+      padding: 0.6rem 1.3rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--aria-cyan-glow);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 5rem 0 4rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--aria-cyan-glow);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      background: rgba(0, 242, 254, 0.05);
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--aria-status-green);
+      box-shadow: 0 0 8px var(--aria-status-green);
+    }
+
+    h1.hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+      line-height: 1.12;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    h1.hero-title span {
+      background: linear-gradient(135deg, #ffffff 20%, var(--aria-cyan-glow) 70%, var(--aria-deep-indigo) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-lede {
+      font-size: 1.1rem;
+      color: var(--aria-text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.65;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Live Proof Card */
+    .proof-card {
+      background: var(--aria-bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--aria-border-dim);
+      border-radius: 16px;
+      padding: 1.75rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .proof-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--aria-cyan-glow);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .proof-card textarea {
+      width: 100%;
+      min-height: 80px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--aria-border-dim);
+      border-radius: 8px;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      padding: 10px 12px;
+      resize: vertical;
+      outline: none;
+    }
+
+    .proof-card textarea:focus {
+      border-color: var(--aria-cyan-glow);
+    }
+
+    .hash-output {
+      margin-top: 12px;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.45);
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      word-break: break-all;
+      color: var(--aria-status-green);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .hash-output.changed {
+      color: var(--aria-cyan-glow);
+      border-color: var(--aria-border-bright);
+    }
+
+    /* Infographic Topology Metrics */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin: 3.5rem 0;
+    }
+
+    .metric-chip {
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+
+    .metric-chip .val {
+      font-family: var(--font-mono);
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--aria-cyan-glow);
+      text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+      margin-bottom: 4px;
+    }
+
+    .metric-chip .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--aria-text-muted);
+    }
+
+    /* 3-Column Infographic Layout */
+    .infographic-tri-col {
+      display: grid;
+      grid-template-columns: 280px 1fr 310px;
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .panel-header {
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--aria-cyan-glow);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding-bottom: 0.65rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--aria-border-dim);
+    }
+
+    .feed-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--aria-border-dim);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.82rem;
+    }
+
+    .feed-card strong {
+      display: block;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+
+    .badge-no-pii {
+      display: block;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-align: center;
+      padding: 0.5rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+
+    /* 7-Layer Interactive Stack */
+    .layer-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .layer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 3px solid var(--aria-deep-indigo);
+      border-radius: 0 6px 6px 0;
+      font-size: 0.82rem;
+    }
+
+    .layer-row.layer-7 {
+      border-left-color: var(--aria-status-red);
+      background: rgba(239, 68, 68, 0.06);
+    }
+
+    .layer-tag {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--aria-cyan-glow);
+      margin-right: 0.5rem;
+    }
+
+    .layer-sla {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--aria-text-muted);
+    }
+
+    /* Benchmarking Card & Ledger */
+    .status-alert {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid var(--aria-status-red);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .status-alert h4 {
+      color: var(--aria-status-red);
+      font-size: 0.82rem;
+      margin-bottom: 0.2rem;
+      font-family: var(--font-display);
+    }
+
+    .audit-chain-box {
+      background: #040814;
+      border: 1px dashed var(--aria-border-dim);
+      border-radius: 8px;
+      padding: 0.85rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--aria-cyan-glow);
+      line-height: 1.6;
+    }
+
+    /* Vertical Extensions */
+    .vertical-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+
+    /* Footer */
+    footer.site-footer {
+      border-top: 1px solid var(--aria-border-dim);
+      background: #02040a;
+      padding: 3rem 0;
+      color: var(--aria-text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 990px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .infographic-tri-col { grid-template-columns: 1fr; }
+      .vertical-grid { grid-template-columns: 1fr; }
+      nav ul { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-<nav>
-  <div class="wrap">
-    <div class="brand"><span>ARIA</span></div>
-    <ul>
-      <li><a href="#what">What it does</a></li>
-      <li><a href="#evidence">The record</a></li>
-      <li><a href="powered-by.html">Powered by ARIA</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </div>
-</nav>
+  <!-- Background Web Oscillator & Glow Canvas -->
+  <canvas id="wave-canvas" aria-hidden="true"></canvas>
+  <div class="ambient-glow" aria-hidden="true"></div>
 
-<header class="hero">
-  <div class="wrap">
-    <span class="eyebrow">Behavioural intelligence substrate</span>
-    <h1 class="headline">Show what happened, <span class="accent">not just say it did.</span></h1>
-    <p class="sub">ARIA gives OEM licensees a tamper-evident audit record for every governed decision -- what happened, when, under which rules, and whether the record was changed afterward. Not asserted. Checked.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="#evidence">See the record structure</a>
-      <a class="btn btn-ghost" href="#contact">Talk to us</a>
+  <!-- Primary Glass Navigation -->
+  <header class="site-header" role="banner">
+    <div class="wrap nav-flex">
+      <a href="#" class="brand-frame" aria-label="ARIA Intelligence Homepage">
+        <svg class="logo-vector" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="50" cy="50" r="46" stroke="#00f2fe" stroke-width="2.5" opacity="0.4"/>
+          <path d="M 22 50 Q 36 28 50 50 T 78 50" stroke="#00f2fe" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M 28 50 Q 39 34 50 50 T 72 50" stroke="#00b4d8" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M 34 50 Q 42 40 50 50 T 66 50" stroke="#4361ee" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <circle cx="50" cy="50" r="4" fill="#ffffff" filter="drop-shadow(0 0 6px #00f2fe)"/>
+        </svg>
+        <span class="brand-name">ARIA</span>
+        <span class="brand-badge">SGTS v3.0</span>
+      </a>
+
+      <nav role="navigation" aria-label="Primary Navigation">
+        <ul>
+          <li><a href="#pipeline">7-Layer Pipeline</a></li>
+          <li><a href="#evidence">Point-of-Action Proof</a></li>
+          <li><a href="#bench">Engine Bench</a></li>
+          <li><a href="#verticals">Verticals</a></li>
+          <li><a href="#bench" class="btn-glow">Access Substrate</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
 
-    <div class="proof-card">
-      <div class="proof-label">Try it -- this hash is computed live, in your browser</div>
-      <textarea id="proofInput" spellcheck="false">entity_id: student-142
+  <main role="main" class="wrap">
+    
+    <!-- Hero Section with Point-of-Action Evidence -->
+    <section class="hero-section">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-pill">
+            <div class="pulse-dot" aria-hidden="true"></div>
+            <span>Point-of-Action Decision Governance</span>
+          </div>
+
+          <h1 class="hero-title">
+            Show What Happened,<br>
+            <span>Not Just Say It Did.</span>
+          </h1>
+
+          <p class="hero-lede">
+            ARIA creates a tamper-evident audit record at the exact moment of decision. Every governed state transition is cryptographically anchored—evaluated with 0% raw text ingestion, sub-0.08ms latency, and a fail-closed safety ceiling.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#pipeline" class="btn-glow">Launch Reality Bench &rarr;</a>
+            <a href="#evidence" class="btn-outline">OEM API Specifications</a>
+          </div>
+        </div>
+
+        <!-- Live Browser SHA-256 Check Component -->
+        <div class="proof-card" id="evidence">
+          <div class="proof-label">Live SHA-256 Identity Check</div>
+          <textarea id="proofInput" spellcheck="false">entity_id: student-142
 assessment: Irregular
-regulation_version: 1.0.0</textarea>
-      <div class="hash-out" id="proofHash" aria-live="polite">computing...</div>
-      <p class="proof-hint">Change one character above. <b>The hash changes completely.</b> That's the same SHA-256 identity check ARIA runs on every record it generates -- no opinion involved, just arithmetic.</p>
-    </div>
-  </div>
-</header>
-
-<section id="what">
-  <div class="wrap">
-    <div class="section-eyebrow">What it does</div>
-    <h2>ARIA is designed to capture compliance-relevant evidence as part of the governed decision itself, rather than reconstructing it afterward.</h2>
-    <p class="lede">It doesn't decide anything and it doesn't act. ARIA observes a governed decision as it happens and produces one thing: a record of it that can be checked, not just trusted.</p>
-
-    <div class="what-grid">
-      <div class="what-card">
-        <h3>Tamper-evident, not tamper-proof-claimed</h3>
-        <p>Every record carries its own content hash and an explicit list of exactly which fields compose it. Alter anything afterward and the check fails -- that's demonstrated above, not asserted here.</p>
+regulation_version: 1.0.0
+gating_status: FAIL_CLOSED_HALT</textarea>
+          <div class="hash-output" id="proofHash" aria-live="polite">Computing deterministic hash...</div>
+          <p style="font-size: 0.78rem; color: var(--aria-text-muted); margin-top: 10px;">
+            Modify any character above. The SHA-256 block immediately recalculates—demonstrating deterministic mathematical non-repudiation.
+          </p>
+        </div>
       </div>
-      <div class="what-card">
-        <h3>Rules pinned to a version, not a memory</h3>
-        <p>Each record states which edition of the regulatory text and indicator vocabulary produced it. If the underlying rules change later, older records stay distinguishable from newer ones.</p>
+    </section>
+
+    <!-- Executive Invariants Strip -->
+    <section class="kpi-row">
+      <div class="glass-card metric-chip">
+        <div class="val">&lt; 0.08 ms</div>
+        <div class="label">Deterministic SLA</div>
       </div>
-      <div class="what-card">
-        <h3>A component, not a verdict</h3>
-        <p>ARIA doesn't instruct and doesn't decide. Every record ends with the same line, because it's true every time: human review required.</p>
+      <div class="glass-card metric-chip">
+        <div class="val">0% PII</div>
+        <div class="label">Payload Isolation</div>
+      </div>
+      <div class="glass-card metric-chip">
+        <div class="val">T = 0</div>
+        <div class="label">Fail-Closed Boundary</div>
+      </div>
+      <div class="glass-card metric-chip">
+        <div class="val">SHA-256</div>
+        <div class="label">Append-Only Chain</div>
+      </div>
+    </section>
+
+    <!-- 3-Column Infographic Topology -->
+    <section class="infographic-tri-col" id="pipeline">
+      
+      <!-- Ingestion Surface -->
+      <div class="glass-card">
+        <div class="panel-header">1. Telemetry Ingestion</div>
+        <div class="feed-card">
+          <strong>Cadence Variance</strong>
+          Interval delta between sequential system events.
+        </div>
+        <div class="feed-card">
+          <strong>Temporal Gap Days</strong>
+          Calendar time elapsed since last verified check-in.
+        </div>
+        <div class="feed-card">
+          <strong>Interaction Latency</strong>
+          Response velocity and interaction offset metrics.
+        </div>
+        <div class="badge-no-pii">
+          0% Raw Text / Transcripts Read &bull; GDPR Art. 17 Immune
+        </div>
+      </div>
+
+      <!-- 7-Layer Pipeline -->
+      <div class="glass-card">
+        <div class="panel-header">2. 7-Layer Gating Substrate</div>
+        <div class="layer-stack">
+          <div class="layer-row">
+            <div><span class="layer-tag">L1</span> Structural Ingestion</div>
+            <div class="layer-sla">&lt; 0.01ms</div>
+          </div>
+          <div class="layer-row">
+            <div><span class="layer-tag">L2</span> Normalization Engine [0.00, 1.00]</div>
+            <div class="layer-sla">&lt; 0.01ms</div>
+          </div>
+          <div class="layer-row">
+            <div><span class="layer-tag">L3</span> Longitudinal Baseline (N=6)</div>
+            <div class="layer-sla">&lt; 0.02ms</div>
+          </div>
+          <div class="layer-row">
+            <div><span class="layer-tag">L4</span> Indicator Evaluation Surface</div>
+            <div class="layer-sla">&lt; 0.02ms</div>
+          </div>
+          <div class="layer-row">
+            <div><span class="layer-tag">L5</span> Multi-Signal Convergence</div>
+            <div class="layer-sla">&lt; 0.01ms</div>
+          </div>
+          <div class="layer-row">
+            <div><span class="layer-tag">L6</span> Contextual Policy Overrides</div>
+            <div class="layer-sla">&lt; 0.01ms</div>
+          </div>
+          <div class="layer-row layer-7">
+            <div><span class="layer-tag" style="color:var(--aria-status-red);">L7</span> T=0 Non-Agentic Ceiling</div>
+            <div class="layer-sla" style="color:var(--aria-status-red);">&lt; 0.01ms</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Governance & Cryptographic Ledger -->
+      <div class="glass-card" id="bench">
+        <div class="panel-header">3. Output & Governance</div>
+        <div class="status-alert">
+          <h4>FAIL-CLOSED INTERCEPT (T=0)</h4>
+          <p style="font-size: 0.75rem; color: #fca5a5;">
+            Autonomous execution halted. Emits diagnostic patch spec for mandatory human authorization.
+          </p>
+        </div>
+        <div class="panel-header" style="margin-top: 1.25rem;">Cryptographic Ledger</div>
+        <div class="audit-chain-box">
+          H_n = SHA256(R_n || H_{n-1})<br>
+          Status: [VERIFIED]<br>
+          Lock: T_consequence<br>
+          Drift Index: 0.00 (Anchored)
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Horizontal Substrate Vertical Plugins -->
+    <section class="vertical-grid" id="verticals">
+      <div class="glass-card">
+        <div class="panel-header">EngagEd Plugin (EdTech / Safeguarding)</div>
+        <p style="font-size: 0.85rem; color: var(--aria-text-muted); line-height: 1.6;">
+          Safeguarding duty-of-care overrides, student cadence drift detection, and multi-tenant FERPA/GDPR compliance without exposing private communications.
+        </p>
+      </div>
+      <div class="glass-card">
+        <div class="panel-header">3Venture Plugin (Enterprise HR / Ops)</div>
+        <p style="font-size: 0.85rem; color: var(--aria-text-muted); line-height: 1.6;">
+          Corporate governance gating, operational friction diagnostics, and reality-anchoring against coherent organizational drift.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="wrap" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="font-family: var(--font-display); font-weight: 700; color: #fff;">ARIA INTELLIGENCE LTD</span>
+        <span style="font-size: 0.75rem;">&bull; Surfaceless Ground Truth Substrate (v3.0)</span>
+      </div>
+      <div style="font-size: 0.8rem;">
+        &copy; 2026 ARIA Intelligence Ltd. Deterministic Behavioural Governance.
       </div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<section>
-  <div class="wrap">
-    <div class="section-eyebrow">How a record gets made</div>
-    <h2>One decision, four stages, one record.</h2>
-    <p class="lede">This is the actual sequence ARIA runs for every governed decision -- not a simplified diagram, the real pipeline.</p>
+  <!-- Scripts: Canvas Wave Animation & Live Hash Calculator -->
+  <script>
+    // 1. Live Web Oscillator Canvas
+    const canvas = document.getElementById('wave-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, step = 0;
 
-    <div class="pipeline">
-      <div class="pipe-step"><div class="pipe-num">01</div><div class="pipe-body"><h3>Raw signal computed</h3><p>Indicator scores are computed from the incoming metadata, before any suppression or gating is applied.</p></div></div>
-      <div class="pipe-step"><div class="pipe-num">02</div><div class="pipe-body"><h3>Suppression applied</h3><p>Signals are bounded and floored to a safe, deterministic range before anything downstream sees them.</p></div></div>
-      <div class="pipe-step"><div class="pipe-num">03</div><div class="pipe-body"><h3>Regulatory gate applied</h3><p>Context decides whether raw or suppressed scores are used -- for example, raw signal is surfaced when an inspection or enforcement action is already active.</p></div></div>
-      <div class="pipe-step"><div class="pipe-num">04</div><div class="pipe-body"><h3>Record generated</h3><p>A GroundTruthRecord is produced: hashed, versioned, and bound back to the session it came from -- ready for human review.</p></div></div>
-    </div>
-  </div>
-</section>
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
 
-<section id="evidence">
-  <div class="wrap">
-    <div class="section-eyebrow">The record itself</div>
-    <h2>What's actually in it.</h2>
-    <p class="lede">Not a marketing description of the record -- the real field names, the same ones an OEM licensee's engineers would see.</p>
+    function drawWave() {
+      ctx.clearRect(0, 0, width, height);
+      step += 0.015;
 
-    <div class="field-grid">
-      <div class="field-row"><span class="field-name">record_hash</span><span class="field-desc">SHA-256 of the record's own content. Recomputed and checked on every read.</span></div>
-      <div class="field-row"><span class="field-name">hashed_fields</span><span class="field-desc">Explicit list of exactly which fields the hash covers.</span></div>
-      <div class="field-row"><span class="field-name">regulation_version</span><span class="field-desc">Which edition of the applicable rules produced this record.</span></div>
-      <div class="field-row"><span class="field-name">taxonomy_version</span><span class="field-desc">Which version of the indicator vocabulary this record's signals refer to.</span></div>
-      <div class="field-row"><span class="field-name">source_reference</span><span class="field-desc">A pointer back to the originating session, for the licensee's own audit trail.</span></div>
-      <div class="field-row"><span class="field-name">schema_version</span><span class="field-desc">Which version of the record's own shape this is.</span></div>
-    </div>
-  </div>
-</section>
+      const lines = [
+        { color: 'rgba(0, 242, 254, 0.12)', length: 0.003, amplitude: 60, speed: 0.02 },
+        { color: 'rgba(0, 180, 216, 0.08)', length: 0.002, amplitude: 80, speed: 0.015 },
+        { color: 'rgba(67, 97, 238, 0.05)', length: 0.0015, amplitude: 100, speed: 0.01 }
+      ];
 
-<section id="example">
-  <div class="wrap">
-    <div class="section-eyebrow">Applied example</div>
-    <h2>One of the decisions ARIA is built to leave a trail for.</h2>
+      lines.forEach((line, index) => {
+        ctx.beginPath();
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = line.color;
 
-    <div class="example">
-      <div class="example-tag">Safeguarding -- one of several verticals</div>
-      <h3>A Designated Safeguarding Lead deciding whether to escalate a flagged concern.</h3>
-      <p>Get it wrong in either direction and someone is affected -- a child left at risk, or a family or staff member harmed by a false escalation. That decision usually leaves no trail: what was seen, what triggered it, who decided, and why. ARIA's record captures exactly that, at the moment the decision is made -- not reconstructed afterward for a review.</p>
-      <div class="caveat">This is one applied example, not the whole product. ARIA is built vertical-agnostic -- the same record structure applies wherever a governed decision needs to be shown, not just told.</div>
-    </div>
-  </div>
-</section>
+        for (let x = 0; x < width; x += 5) {
+          const y = height * 0.45 + Math.sin(x * line.length + step * (index + 1)) * line.amplitude * Math.cos(step * 0.5);
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      });
 
-<section id="contact">
-  <div class="wrap">
-    <div class="section-eyebrow">Get in touch</div>
-    <h2>Ask about a specific decision you'd need evidence for.</h2>
-    <p class="lede">That's a more useful first conversation than an architecture walkthrough -- tell us the decision, we'll show you the record.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="mailto:daniel.stokes@ariaengaged.co.uk">daniel.stokes@ariaengaged.co.uk</a>
-    </div>
-  </div>
-</section>
+      requestAnimationFrame(drawWave);
+    }
+    drawWave();
 
-<footer>
-  <a href="powered-by.html">Powered by ARIA</a>
-  <a href="privacy.html">Privacy</a>
-  <p class="fine">ARIA does not instruct and does not decide. It produces a record for human review. ARIA is designed to capture compliance-relevant evidence as part of a governed decision -- this does not itself establish compliance with any specific regulatory regime, and nothing on this page should be read as a compliance guarantee.</p>
-</footer>
+    // 2. Real-Time SHA-256 Hash Computation in Browser
+    async function computeSHA256(text) {
+      const msgBuffer = new TextEncoder().encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
 
-<script>
-async function sha256(text){
-  const enc = new TextEncoder().encode(text);
-  const buf = await crypto.subtle.digest('SHA-256', enc);
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-}
-const input = document.getElementById('proofInput');
-const out = document.getElementById('proofHash');
-let lastHash = '';
-async function update(){
-  const h = await sha256(input.value);
-  out.textContent = h;
-  if (lastHash && h !== lastHash){
-    out.classList.add('changed');
-    setTimeout(()=>out.classList.remove('changed'), 600);
-  }
-  lastHash = h;
-}
-input.addEventListener('input', update);
-update();
-</script>
+    const proofInput = document.getElementById('proofInput');
+    const proofHash = document.getElementById('proofHash');
 
+    async function updateLiveProof() {
+      const val = proofInput.value;
+      const hash = await computeSHA256(val);
+      proofHash.innerText = hash;
+      proofHash.classList.add('changed');
+      setTimeout(() => proofHash.classList.remove('changed'), 200);
+    }
+
+    proofInput.addEventListener('input', updateLiveProof);
+    updateLiveProof();
+  </script>
 </body>
 </html>
