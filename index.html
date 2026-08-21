@@ -180,12 +180,13 @@ async function doHash(){
   function frameCamera(){
     W = window.innerWidth; H = window.innerHeight;
     const aspect = W / H;
-    // Wider span needs the camera pulled back further to still fit the shape.
-    const spanScale = SPAN / 14;
+    // The plane's overall footprint (horizontal span + row depth) sets how far back the camera needs to sit.
+    const footprint = Math.max(SPAN, ROW_DEPTH + 6);
+    const spanScale = footprint / 14;
     // Narrow/portrait screens need the camera pulled back much further,
     // or the same world-space shape fills far more of the frame.
     const zoomOut = (aspect < 1 ? (1 / aspect) * 1.15 : 1) * spanScale;
-    camera.position.set(9 * zoomOut, 5.5 * zoomOut, 13 * zoomOut);
+    camera.position.set(9 * zoomOut, 6.5 * zoomOut, 13 * zoomOut);
     camera.lookAt(0, 0, 0);
     camera.aspect = aspect;
     camera.updateProjectionMatrix();
@@ -199,20 +200,22 @@ async function doHash(){
   const cTeal = new THREE.Color(0x4a9aa5), cCyan = new THREE.Color(0x71bcc8), cGreen = new THREE.Color(0x67956e);
   const cNavyGhost = new THREE.Color(0x1b3a3e);
 
-  const COUNT = 170;
-  const SPAN = 24;
+  const ROWS = 9;       // parallel strands, stacked in depth
+  const COLS = 22;      // spheres along each strand
+  const SPAN = 20;       // horizontal extent of each strand
+  const ROW_DEPTH = 10;  // total depth spread across all rows
 
-  function vortexPoint(t){
+  function vortexPoint(t, rowOffsetZ){
     const turns = 2.1;
     const theta = t * turns * Math.PI * 2;
     const decay = 2.6;
     const r = 5.2 * Math.exp(-decay * t);
-    return new THREE.Vector3(Math.cos(theta) * r, (t - 0.5) * 1.2, Math.sin(theta) * r);
+    return new THREE.Vector3(Math.cos(theta) * r, (t - 0.5) * 1.2, Math.sin(theta) * r * 0.4 + rowOffsetZ);
   }
-  function wavePoint(t){
+  function wavePoint(t, rowOffsetZ){
     const x = t * SPAN - SPAN/2;
-    const y = Math.sin(t * Math.PI * 4.2) * 1.9 * (0.35 + 0.65*Math.sin(t*Math.PI));
-    const z = Math.cos(t * Math.PI * 2.4) * 2.2;
+    const y = Math.sin(t * Math.PI * 4.2) * 1.7 * (0.35 + 0.65*Math.sin(t*Math.PI));
+    const z = Math.cos(t * Math.PI * 2.4) * 0.6 + rowOffsetZ;
     return new THREE.Vector3(x, y, z);
   }
   function colorFor(t){
@@ -220,32 +223,39 @@ async function doHash(){
   }
   function easeInOutCubic(x){ return x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2,3)/2; }
 
-  const geo = new THREE.SphereGeometry(0.055, 12, 12);
+  const geo = new THREE.SphereGeometry(0.05, 10, 10);
   const primary = [];
   const vortexPts = [], wavePts = [];
 
-  for (let i = 0; i < COUNT; i++) {
-    const t = i / (COUNT - 1);
-    vortexPts.push(vortexPoint(t));
-    wavePts.push(wavePoint(t));
-    const mat = new THREE.MeshBasicMaterial({ color: colorFor(t), transparent:true, opacity:0.32 });
-    const sphere = new THREE.Mesh(geo, mat);
-    sphere.position.copy(vortexPts[i]);
-    sphere.scale.setScalar(0.4 + 0.4*Math.sin(t*Math.PI));
-    scene.add(sphere);
-    primary.push(sphere);
+  for (let r = 0; r < ROWS; r++){
+    const rowT = ROWS === 1 ? 0.5 : r / (ROWS - 1);
+    const rowOffsetZ = (rowT - 0.5) * ROW_DEPTH;
+    const rowFade = 0.55 + 0.45 * Math.sin(rowT * Math.PI); // center rows read slightly stronger than edge rows
+    for (let c = 0; c < COLS; c++) {
+      const t = c / (COLS - 1);
+      const vp = vortexPoint(t, rowOffsetZ);
+      const wp = wavePoint(t, rowOffsetZ);
+      vortexPts.push(vp);
+      wavePts.push(wp);
+      const mat = new THREE.MeshBasicMaterial({ color: colorFor(t), transparent:true, opacity: 0.30 * rowFade });
+      const sphere = new THREE.Mesh(geo, mat);
+      sphere.position.copy(vp);
+      sphere.scale.setScalar((0.4 + 0.4*Math.sin(t*Math.PI)) * rowFade);
+      scene.add(sphere);
+      primary.push(sphere);
+    }
   }
+  const TOTAL = primary.length;
 
   const ghostLayers = [];
   if (!reduceMotion){
-    [0.14, 0.28].forEach((lag, gi) => {
+    [0.16].forEach((lag) => {
       const meshes = [];
-      for (let i = 0; i < COUNT; i++){
-        const t = i / (COUNT - 1);
-        const mat = new THREE.MeshBasicMaterial({ color: cNavyGhost, transparent:true, opacity: 0.06 - gi*0.02 });
+      for (let i = 0; i < TOTAL; i++){
+        const mat = new THREE.MeshBasicMaterial({ color: cNavyGhost, transparent:true, opacity: 0.05 });
         const s = new THREE.Mesh(geo, mat);
         s.position.copy(vortexPts[i]);
-        s.scale.setScalar((0.4 + 0.4*Math.sin(t*Math.PI)) * (0.9 - gi*0.15));
+        s.scale.copy(primary[i].scale).multiplyScalar(0.85);
         scene.add(s);
         meshes.push(s);
       }
@@ -281,7 +291,7 @@ async function doHash(){
 
   function setLayer(meshes, p){
     const eased = easeInOutCubic(p);
-    for (let i = 0; i < COUNT; i++){
+    for (let i = 0; i < TOTAL; i++){
       meshes[i].position.lerpVectors(vortexPts[i], wavePts[i], eased);
     }
   }
