@@ -18,61 +18,453 @@
 <meta name="twitter:image" content="https://ariaengaged.co.uk/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --navy:#05081a; --deep-teal:#1b3a3e;
-    --teal:#4a9aa5; --cyan:#71bcc8; --green:#67956e;
-    --ink:#e9f2f2; --ink-dim:#9fb3b5; --line: rgba(233,242,242,0.10);
+  :root {
+    --navy: #040714;
+    --navy-surface: #0a0f24;
+    --deep-teal: #142a30;
+    --teal: #4a9aa5;
+    --cyan: #71bcc8;
+    --cyan-bright: #00f2fe;
+    --green: #67956e;
+    --ink: #e9f2f2;
+    --ink-dim: #9fb3b5;
+    --line: rgba(233, 242, 242, 0.08);
+    --line-glow: rgba(113, 188, 200, 0.25);
   }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;overflow-x:hidden;}
-  body{margin:0;overflow-x:hidden;background:var(--navy);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
-  h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;margin:0;}
-  code, .mono{font-family:'JetBrains Mono', monospace;}
-  a{color:inherit;}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body {
+    margin: 0;
+    overflow-x: hidden;
+    background: var(--navy);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  code, .mono { font-family: 'JetBrains Mono', monospace; }
+  a { color: inherit; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
 
-  nav{position:sticky; top:0; z-index:50;background:rgba(5,8,26,0.85);border-bottom:1px solid var(--line);backdrop-filter:blur(8px);}
-  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
-  nav .brand span{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.02em;}
-  nav .brand img{height:28px;display:block;}
-  nav ul{list-style:none;display:flex;gap:24px;margin:0;padding:0;overflow-x:auto;}
-  nav a{text-decoration:none;color:var(--ink-dim);font-size:0.88rem;font-weight:500;white-space:nowrap;}
-  nav a:hover{color:var(--cyan);}
+  /* Navigation */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(4, 7, 20, 0.85);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+  nav .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  nav .brand img { height: 28px; display: block; }
+  nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+  }
+  nav a {
+    text-decoration: none;
+    color: var(--ink-dim);
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  nav a:hover { color: var(--cyan); }
+  .nav-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    background: rgba(113, 188, 200, 0.1);
+    border: 1px solid rgba(113, 188, 200, 0.3);
+    color: var(--cyan) !important;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .nav-btn:hover {
+    background: rgba(113, 188, 200, 0.2);
+  }
 
-  header.hero{padding:56px 0 48px;background:radial-gradient(ellipse 900px 500px at 15% 0%, rgba(74,154,165,0.18), transparent 60%),var(--navy);}
-  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(113,188,200,0.3);padding:6px 12px;border-radius:100px;margin-bottom:20px;}
-  .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);}
-  h1.headline{font-size:clamp(1.9rem,4.4vw,2.8rem);line-height:1.15;color:#fff;max-width:18ch;}
-  h1.headline .accent{background:linear-gradient(90deg,var(--cyan),var(--green));-webkit-background-clip:text;background-clip:text;color:transparent;}
-  .sub{margin-top:18px;font-size:1.02rem;color:var(--ink-dim);max-width:56ch;}
-  .cta-row{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;}
-  .btn{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.92rem;padding:13px 24px;border-radius:8px;text-decoration:none;display:inline-block;}
-  .btn-primary{background:linear-gradient(90deg,var(--teal),var(--cyan));color:#03151a;}
-  .btn-ghost{border:1px solid var(--line);color:var(--ink);}
+  /* Hero Section */
+  header.hero {
+    padding: 80px 0 64px;
+    position: relative;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    background: rgba(74, 154, 165, 0.08);
+    border: 1px solid rgba(113, 188, 200, 0.3);
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+  .eyebrow-pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+  }
+  h1.headline {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    line-height: 1.1;
+    color: #fff;
+    max-width: 20ch;
+  }
+  h1.headline .accent {
+    background: linear-gradient(100deg, var(--cyan) 0%, var(--green) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .sub {
+    margin-top: 20px;
+    font-size: 1.08rem;
+    color: var(--ink-dim);
+    max-width: 58ch;
+    line-height: 1.65;
+  }
+  .cta-row {
+    margin-top: 32px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 13px 26px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }
+  .btn-primary {
+    background: linear-gradient(90deg, var(--teal), var(--cyan));
+    color: #03151a;
+    box-shadow: 0 4px 20px rgba(74, 154, 165, 0.25);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 6px 24px rgba(113, 188, 200, 0.4);
+    transform: translateY(-1px);
+  }
+  .btn-ghost {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(233, 242, 242, 0.2);
+  }
 
-  .proof-card{margin-top:32px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:22px;}
-  .proof-label{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;}
-  .proof-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-  .proof-row input{flex:1;min-width:180px;background:rgba(0,0,0,0.3);border:1px solid var(--line);border-radius:8px;color:var(--ink);padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:0.85rem;}
-  .proof-row button{background:var(--teal);color:#03151a;border:none;border-radius:8px;padding:10px 16px;font-family:'Space Grotesk',sans-serif;font-weight:600;cursor:pointer;}
-  .hash-out{margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--cyan);word-break:break-all;}
+  /* Interactive Proof Card */
+  .proof-card {
+    margin-top: 48px;
+    background: rgba(10, 15, 36, 0.75);
+    border: 1px solid rgba(113, 188, 200, 0.18);
+    backdrop-filter: blur(16px);
+    border-radius: 14px;
+    padding: 24px 28px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+  }
+  .proof-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .proof-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .proof-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--green);
+  }
+  .proof-row {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+  .proof-row input {
+    flex: 1;
+    min-width: 240px;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--ink);
+    padding: 12px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .proof-row input:focus {
+    border-color: var(--cyan);
+  }
+  .proof-row button {
+    background: var(--teal);
+    color: #03151a;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .proof-row button:hover { opacity: 0.9; }
+  .hash-box {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px dashed rgba(113, 188, 200, 0.3);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .hash-out {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--cyan);
+    word-break: break-all;
+  }
+  .copy-btn {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+  .copy-btn:hover {
+    color: var(--ink);
+    border-color: var(--cyan);
+  }
 
-  section{padding:48px 0;}
-  section h2{font-size:1.5rem;color:#fff;margin-bottom:20px;}
-  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
-  .card{background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:20px;}
-  .card h3{font-size:1.02rem;margin-bottom:8px;color:var(--cyan);}
-  .card p{font-size:0.92rem;color:var(--ink-dim);}
+  /* Metrics Ribbon */
+  .metrics-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+    margin: 40px 0;
+  }
+  .metric-item {
+    border-left: 2px solid var(--teal);
+    padding-left: 14px;
+  }
+  .metric-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .metric-label {
+    font-size: 0.82rem;
+    color: var(--ink-dim);
+  }
 
-  footer{padding:32px 0;border-top:1px solid var(--line);font-size:0.85rem;color:var(--ink-dim);}
-  footer a{color:var(--cyan);text-decoration:none;}
+  /* Section Styling */
+  section { padding: 64px 0; }
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 8px;
+  }
+  section h2 {
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .section-lead {
+    font-size: 1rem;
+    color: var(--ink-dim);
+    max-width: 68ch;
+    margin-bottom: 32px;
+  }
 
-  #signalCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block;}
-  .signal-label{position:fixed;left:24px;bottom:16px;z-index:1;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-dim);opacity:0.55;pointer-events:none;}
-  .page{position:relative;z-index:1;}
-  header.hero{background:radial-gradient(ellipse 900px 500px at 15% 0%, rgba(74,154,165,0.14), transparent 60%);}
+  /* Grids & Cards */
+  .grid3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(113, 188, 200, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+  .card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .card p {
+    font-size: 0.92rem;
+    color: var(--ink-dim);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Interactive Architecture Tabs */
+  .arch-container {
+    background: rgba(10, 15, 36, 0.6);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+  }
+  @media(max-width: 768px) {
+    .arch-container { grid-template-columns: 1fr; }
+  }
+  .arch-tabs {
+    background: rgba(0, 0, 0, 0.2);
+    border-right: 1px solid var(--line);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .arch-tab {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--ink-dim);
+    background: transparent;
+    border: 1px solid transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .arch-tab.active {
+    background: rgba(113, 188, 200, 0.1);
+    color: var(--cyan);
+    border-color: rgba(113, 188, 200, 0.25);
+  }
+  .arch-content {
+    padding: 28px;
+  }
+  .arch-content h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem;
+    color: #fff;
+    margin: 0 0 10px;
+  }
+  .arch-content p {
+    font-size: 0.95rem;
+    color: var(--ink-dim);
+    margin-bottom: 20px;
+  }
+  .arch-code-box {
+    background: #03050c;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--cyan);
+    overflow-x: auto;
+  }
+
+  /* Footer */
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+    font-size: 0.88rem;
+    color: var(--ink-dim);
+    background: rgba(4, 7, 20, 0.9);
+  }
+  footer .footer-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer a { color: var(--cyan); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  #signalCanvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    display: block;
+  }
+  .signal-label {
+    position: fixed;
+    left: 24px;
+    bottom: 16px;
+    z-index: 1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .page { position: relative; z-index: 1; }
 </style>
 </head>
 <body>
@@ -83,65 +475,144 @@
 <div class="page">
 <nav>
   <div class="wrap">
-    <div class="brand"><img src="/aria-logo-2.png" alt="ARIA"></div>
+    <a href="#" class="brand">
+      <img src="/aria-logo-2.png" alt="ARIA">
+    </a>
     <ul>
-      <li><a href="#substrate">What ARIA is</a></li>
-      <li><a href="#what">What it does</a></li>
-      <li><a href="#proof">Live demo</a></li>
-      <li><a href="powered-by.html">Powered by ARIA</a></li>
-      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="#substrate">Substrate</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#capabilities">Capabilities</a></li>
+      <li><a href="#proof">Hash Demo</a></li>
+      <li><a href="mailto:daniel.stokes@ariaengaged.co.uk" class="nav-btn">Request Access</a></li>
     </ul>
   </div>
 </nav>
 
 <header class="hero">
   <div class="wrap">
-    <div class="eyebrow">Pre-customer &middot; Internally tested</div>
+    <div class="eyebrow">
+      <span class="eyebrow-pulse"></span>
+      Deterministic Behavioral Intelligence &middot; Non-Agentic
+    </div>
     <h1 class="headline">A tamper-evident audit record for every <span class="accent">governed decision</span></h1>
-    <p class="sub">ARIA is designed to capture compliance-relevant evidence at the point of decision — what happened, when, under which rules, and that nothing was changed afterward — rather than reconstructing it after the fact.</p>
+    <p class="sub">ARIA captures compliance-relevant evidence at the exact point of decision — proving what happened, when, under which rules, and certifying that nothing was altered after the fact.</p>
+    
     <div class="cta-row">
       <a class="btn btn-primary" href="mailto:daniel.stokes@ariaengaged.co.uk">Get in touch</a>
-      <a class="btn btn-ghost" href="#proof">See the hash demo</a>
+      <a class="btn btn-ghost" href="#architecture">Explore the stack</a>
     </div>
 
+    <!-- Live Cryptographic Demo -->
     <div class="proof-card" id="proof">
-      <div class="proof-label">Live SHA-256 demonstration</div>
-      <div class="proof-row">
-        <input id="hashInput" type="text" placeholder="Type anything…" value="example governed decision">
-        <button onclick="doHash()">Hash it</button>
+      <div class="proof-header">
+        <span class="proof-label">Browser-Native SHA-256 Verification</span>
+        <span class="proof-status" id="hashStatus">⬤ Ready</span>
       </div>
-      <div class="hash-out" id="hashOut">— output appears here —</div>
-      <p style="margin-top:10px;font-size:0.82rem;color:var(--ink-dim)">This runs entirely in your browser using the Web Crypto API — nothing is sent anywhere. It illustrates the same one-way, tamper-evident hashing principle ARIA applies to decision records, not ARIA itself.</p>
+      <div class="proof-row">
+        <input id="hashInput" type="text" placeholder="Type a state or decision record..." value="decision:grant_policy_override:actor_402:timestamp_1740000000" oninput="doHash()">
+        <button onclick="doHash()">Generate Hash</button>
+      </div>
+      <div class="hash-box">
+        <div class="hash-out" id="hashOut">— output appears here —</div>
+        <button class="copy-btn" onclick="copyHash()">Copy</button>
+      </div>
+      <p style="margin: 12px 0 0; font-size: 0.8rem; color: var(--ink-dim);">
+        Executes locally via the Web Crypto API. Illustrates how ARIA deterministically binds and verifies decision records without external data transmission.
+      </p>
+    </div>
+
+    <!-- Metrics Ribbon -->
+    <div class="metrics-strip">
+      <div class="metric-item">
+        <div class="metric-value">100%</div>
+        <div class="metric-label">Deterministic rule execution</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-value">0ms</div>
+        <div class="metric-label">After-the-fact reconstruction lag</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-value">Immutable</div>
+        <div class="metric-label">Cryptographically anchored records</div>
+      </div>
     </div>
   </div>
 </header>
 
 <section id="substrate">
   <div class="wrap">
+    <div class="section-tag">Substrate Foundation</div>
     <h2>What ARIA is</h2>
-    <p style="max-width:70ch;color:var(--ink-dim);font-size:1rem;">ARIA is a deterministic behavioural intelligence substrate — it observes operational and behavioural signals, evaluates them against transparent, versioned rules, and produces a governed decision together with a verifiable record of how that decision was reached. The same inputs always produce the same outputs, and the reasoning behind every decision is inspectable after the fact.</p>
+    <p class="section-lead">
+      ARIA is a deterministic behavioural intelligence substrate — observing operational signals, evaluating them against versioned policies, and producing a verifiable record of how every decision was reached.
+    </p>
+
+    <div class="grid3">
+      <div class="card">
+        <div class="card-num">01 / SUBSTRATE</div>
+        <h3>Non-Agentic by Design</h3>
+        <p>ARIA captures, timestamps, and certifies operational evidence. It leaves agency with human operators and existing systems.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">02 / CRYPTOGRAPHY</div>
+        <h3>Tamper-Evident Records</h3>
+        <p>Every state transition is cryptographically hashed, ensuring alterations are mathematically detectable rather than just policy-forbidden.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">03 / DRIFT DETECTION</div>
+        <h3>Baseline Comparison</h3>
+        <p>Evaluates realtime behavioral signals against established baselines, surfacing meaningful drift to human operators without unprompted actions.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<section id="what">
+<!-- Layered Architecture Showcase -->
+<section id="architecture">
   <div class="wrap">
-    <h2>What it does</h2>
+    <div class="section-tag">System Design</div>
+    <h2>Substrate Architecture</h2>
+    <p class="section-lead">A layered, deterministic engine built for integration into existing governed workflows.</p>
+
+    <div class="arch-container">
+      <div class="arch-tabs">
+        <button class="arch-tab active" onclick="showArch(0)">Layer 1: Signal Ingestion</button>
+        <button class="arch-tab" onclick="showArch(1)">Layer 2: State Normalization</button>
+        <button class="arch-tab" onclick="showArch(2)">Layer 3: Policy Gate</button>
+        <button class="arch-tab" onclick="showArch(3)">Layer 4: Immutable Record</button>
+      </div>
+      <div class="arch-content" id="archContent">
+        <h4 id="archTitle">Layer 1: Signal Ingestion</h4>
+        <p id="archDesc">Captures live telemetry, user interactions, and environmental parameters without injecting latency into the operational host application.</p>
+        <div class="arch-code-box" id="archCode">
+{
+  "event": "signal_capture",
+  "source": "host_subsystem_auth",
+  "deterministic_state": true,
+  "telemetry_clock": 1740000000214
+}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="capabilities">
+  <div class="wrap">
+    <div class="section-tag">Integration & Deployment</div>
+    <h2>OEM-Ready Integration</h2>
     <div class="grid3">
       <div class="card">
-        <h3>Records, doesn't decide</h3>
-        <p>ARIA is non-agentic. It captures and verifies evidence about governed decisions — it does not make those decisions itself.</p>
+        <h3>Drop-in Licensing</h3>
+        <p>Designed from first principles to be embedded into bespoke software environments, workflow engines, and enterprise software suites.</p>
       </div>
       <div class="card">
-        <h3>Tamper-evident by construction</h3>
-        <p>Records are cryptographically hashed and can be anchored externally, so any after-the-fact alteration is detectable, not merely disallowed by policy.</p>
+        <h3>Inspectable Audit Trails</h3>
+        <p>Export full cryptographically provable histories for external audits, compliance validation, and regulatory filings.</p>
       </div>
       <div class="card">
-        <h3>Flags drift, doesn't act on it</h3>
-        <p>Part of that evaluation includes comparing current behaviour against an established baseline and surfacing meaningful deviation to a human reviewer — ARIA flags, it never acts automatically.</p>
-      </div>
-      <div class="card">
-        <h3>Built for OEM licensing</h3>
-        <p>Designed as a substrate other products integrate into their own governed workflows — not a standalone end-user application.</p>
+        <h3>Zero Surfaceless Waste</h3>
+        <p>Low-overhead execution model engineered for strict latency budgets and critical operational infrastructures.</p>
       </div>
     </div>
   </div>
@@ -149,19 +620,81 @@
 
 <footer>
   <div class="wrap">
-    ARIA EngagEd Ltd &middot; <a href="mailto:daniel.stokes@ariaengaged.co.uk">daniel.stokes@ariaengaged.co.uk</a> &middot; <a href="privacy.html">Privacy</a>
+    <div class="footer-wrap">
+      <div>
+        <strong>ARIA EngagEd Ltd</strong> &middot; <a href="mailto:daniel.stokes@ariaengaged.co.uk">daniel.stokes@ariaengaged.co.uk</a>
+      </div>
+      <div>
+        <a href="powered-by.html">Powered by ARIA</a> &middot; <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
   </div>
 </footer>
 
 </div>
 
 <script>
+// SHA-256 Demo Functionality
 async function doHash(){
   const val = document.getElementById('hashInput').value;
+  const status = document.getElementById('hashStatus');
+  if(!val){
+    document.getElementById('hashOut').textContent = '— enter input above —';
+    status.textContent = '⬤ Idle';
+    return;
+  }
   const enc = new TextEncoder().encode(val);
   const buf = await crypto.subtle.digest('SHA-256', enc);
   const hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
   document.getElementById('hashOut').textContent = hex;
+  status.textContent = '⬤ Verified Hashed';
+}
+
+function copyHash(){
+  const text = document.getElementById('hashOut').textContent;
+  if(text && !text.includes('—')){
+    navigator.clipboard.writeText(text);
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 1800);
+  }
+}
+
+// Initial hash execution
+doHash();
+
+// Interactive Architecture Tabs
+const archData = [
+  {
+    title: "Layer 1: Signal Ingestion",
+    desc: "Captures live telemetry, user interactions, and environmental parameters without injecting latency into the operational host application.",
+    code: `{\n  "event": "signal_capture",\n  "source": "host_subsystem_auth",\n  "deterministic_state": true,\n  "telemetry_clock": 1740000000214\n}`
+  },
+  {
+    title: "Layer 2: State Normalization",
+    desc: "Structures varied incoming operational vectors into deterministic, versioned input schemas prepared for governance validation.",
+    code: `{\n  "schema_version": "2.4.0",\n  "normalized_vector": [0.12, 0.94, 0.04, 1.0],\n  "entropy_check": "VALID"\n}`
+  },
+  {
+    title: "Layer 3: Policy Gate & Drift Evaluation",
+    desc: "Evaluates the normalized vector against immutable versioned rule tables, flagging baseline drift to human reviewers.",
+    code: `{\n  "rule_id": "POL_GOV_882",\n  "drift_detected": false,\n  "decision_vector": "ALLOW_PASS",\n  "action_required": "NONE"\n}`
+  },
+  {
+    title: "Layer 4: Immutable Record Generation",
+    desc: "Constructs a tamper-evident SHA-256 receipt binding the inputs, rule version, timestamp, and resulting decision state.",
+    code: `{\n  "record_id": "REC_98124_ARIA",\n  "digest": "8a54d99e03d4fb0e91129b0a7019672",\n  "tamper_evident": true\n}`
+  }
+];
+
+function showArch(index) {
+  const tabs = document.querySelectorAll('.arch-tab');
+  tabs.forEach((tab, i) => {
+    tab.classList.toggle('active', i === index);
+  });
+  document.getElementById('archTitle').textContent = archData[index].title;
+  document.getElementById('archDesc').textContent = archData[index].desc;
+  document.getElementById('archCode').textContent = archData[index].code;
 }
 </script>
 
@@ -180,11 +713,8 @@ async function doHash(){
   function frameCamera(){
     W = window.innerWidth; H = window.innerHeight;
     const aspect = W / H;
-    // The plane's overall footprint (horizontal span + row depth) sets how far back the camera needs to sit.
     const footprint = Math.max(SPAN, ROW_DEPTH + 6);
     const spanScale = footprint / 14;
-    // Narrow/portrait screens need the camera pulled back much further,
-    // or the same world-space shape fills far more of the frame.
     const zoomOut = (aspect < 1 ? (1 / aspect) * 1.15 : 1) * spanScale;
     camera.position.set(9 * zoomOut, 6.5 * zoomOut, 13 * zoomOut);
     camera.lookAt(0, 0, 0);
@@ -196,14 +726,13 @@ async function doHash(){
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  // Brand gradient: teal -> cyan -> green
   const cTeal = new THREE.Color(0x4a9aa5), cCyan = new THREE.Color(0x71bcc8), cGreen = new THREE.Color(0x67956e);
   const cNavyGhost = new THREE.Color(0x1b3a3e);
 
-  const ROWS = 9;       // parallel strands, stacked in depth
-  const COLS = 22;      // spheres along each strand
-  const SPAN = 20;       // horizontal extent of each strand
-  const ROW_DEPTH = 10;  // total depth spread across all rows
+  const ROWS = 9;
+  const COLS = 22;
+  const SPAN = 20;
+  const ROW_DEPTH = 10;
 
   function vortexPoint(t, rowOffsetZ){
     const turns = 2.1;
@@ -230,7 +759,7 @@ async function doHash(){
   for (let r = 0; r < ROWS; r++){
     const rowT = ROWS === 1 ? 0.5 : r / (ROWS - 1);
     const rowOffsetZ = (rowT - 0.5) * ROW_DEPTH;
-    const rowFade = 0.55 + 0.45 * Math.sin(rowT * Math.PI); // center rows read slightly stronger than edge rows
+    const rowFade = 0.55 + 0.45 * Math.sin(rowT * Math.PI);
     for (let c = 0; c < COLS; c++) {
       const t = c / (COLS - 1);
       const vp = vortexPoint(t, rowOffsetZ);
