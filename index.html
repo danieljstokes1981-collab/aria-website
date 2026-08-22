@@ -1,244 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ARIA — Behavioural Intelligence</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARIA — Behavioural Intelligence</title>
+<meta name="description" content="ARIA generates a tamper-evident audit record for every governed decision — designed to capture compliance-relevant evidence at the point of decision, rather than reconstructing it afterward.">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="ARIA — Behavioural Intelligence">
+<meta property="og:description" content="A tamper-evident audit record for every governed decision.">
+<meta property="og:image" content="https://ariaengaged.co.uk/og-image.png">
+<meta property="og:url" content="https://ariaengaged.co.uk/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ARIA — Behavioural Intelligence">
+<meta name="twitter:description" content="A tamper-evident audit record for every governed decision.">
+<meta name="twitter:image" content="https://ariaengaged.co.uk/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#05081a; --deep-teal:#1b3a3e;
+    --teal:#4a9aa5; --cyan:#71bcc8; --green:#67956e;
+    --ink:#e9f2f2; --ink-dim:#9fb3b5; --line: rgba(233,242,242,0.10);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{margin:0;overflow-x:hidden;background:var(--navy);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;margin:0;}
+  code, .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Inter, system-ui, sans-serif;
-            background: #0b0d11;
-            color: #ffffff;
-            overflow-x: hidden;
-        }
+  nav{position:sticky; top:0; z-index:50;background:rgba(5,8,26,0.85);border-bottom:1px solid var(--line);backdrop-filter:blur(8px);}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  nav .brand span{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:0.02em;}
+  nav .brand img{height:28px;display:block;}
+  nav ul{list-style:none;display:flex;gap:24px;margin:0;padding:0;overflow-x:auto;}
+  nav a{text-decoration:none;color:var(--ink-dim);font-size:0.88rem;font-weight:500;white-space:nowrap;}
+  nav a:hover{color:var(--cyan);}
 
-        /* GEOMETRIC BACKGROUND */
-        .bg-geometry {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background:
-                radial-gradient(circle at 20% 30%, rgba(76,125,240,0.35), transparent 60%),
-                radial-gradient(circle at 80% 70%, rgba(255,120,60,0.28), transparent 60%),
-                linear-gradient(135deg, #0b0d11 0%, #12141b 100%);
-        }
+  header.hero{padding:56px 0 48px;background:radial-gradient(ellipse 900px 500px at 15% 0%, rgba(74,154,165,0.18), transparent 60%),var(--navy);}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(113,188,200,0.3);padding:6px 12px;border-radius:100px;margin-bottom:20px;}
+  .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);}
+  h1.headline{font-size:clamp(1.9rem,4.4vw,2.8rem);line-height:1.15;color:#fff;max-width:18ch;}
+  h1.headline .accent{background:linear-gradient(90deg,var(--cyan),var(--green));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .sub{margin-top:18px;font-size:1.02rem;color:var(--ink-dim);max-width:56ch;}
+  .cta-row{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.92rem;padding:13px 24px;border-radius:8px;text-decoration:none;display:inline-block;}
+  .btn-primary{background:linear-gradient(90deg,var(--teal),var(--cyan));color:#03151a;}
+  .btn-ghost{border:1px solid var(--line);color:var(--ink);}
 
-        /* NAVIGATION */
-        header {
-            padding: 2rem 4rem;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
+  .proof-card{margin-top:32px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:22px;}
+  .proof-label{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;}
+  .proof-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .proof-row input{flex:1;min-width:180px;background:rgba(0,0,0,0.3);border:1px solid var(--line);border-radius:8px;color:var(--ink);padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:0.85rem;}
+  .proof-row button{background:var(--teal);color:#03151a;border:none;border-radius:8px;padding:10px 16px;font-family:'Space Grotesk',sans-serif;font-weight:600;cursor:pointer;}
+  .hash-out{margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--cyan);word-break:break-all;}
 
-        nav a {
-            margin-left: 2rem;
-            font-weight: 500;
-            opacity: 0.9;
-            text-decoration: none;
-            color: #ffffff;
-        }
+  section{padding:48px 0;}
+  section h2{font-size:1.5rem;color:#fff;margin-bottom:20px;}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
+  .card{background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:20px;}
+  .card h3{font-size:1.02rem;margin-bottom:8px;color:var(--cyan);}
+  .card p{font-size:0.92rem;color:var(--ink-dim);}
 
-        nav a:hover {
-            opacity: 1;
-        }
+  footer{padding:32px 0;border-top:1px solid var(--line);font-size:0.85rem;color:var(--ink-dim);}
+  footer a{color:var(--cyan);text-decoration:none;}
 
-        /* HERO BRAND LOCKUP */
-        .aria-lockup {
-            width: 360px;
-            margin: 0 auto 2rem;
-            display: block;
-        }
-
-        /* HERO */
-        .hero {
-            padding: 7rem 4rem 6rem;
-            max-width: 900px;
-            text-align: center;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3.4rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.15;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            opacity: 0.85;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .cta-btn {
-            margin-top: 2.5rem;
-            padding: 1.1rem 2.2rem;
-            background: #6ea8ff;
-            border-radius: 10px;
-            color: #0b0d11;
-            font-weight: 600;
-            display: inline-block;
-            transition: 0.2s ease;
-            text-decoration: none;
-        }
-
-        .cta-btn:hover {
-            background: #8bb8ff;
-        }
-
-        /* SECTIONS */
-        section {
-            padding: 5rem 4rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .proof-list li {
-            margin-bottom: 1rem;
-            font-size: 1.15rem;
-            opacity: 0.9;
-        }
-
-        /* GEOMETRIC SPHERES */
-        .sphere {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle at 30% 30%, #6ea8ff, #0b0d11);
-            border-radius: 50%;
-            filter: blur(0.4px);
-            margin: 3rem auto;
-        }
-
-        /* DEMO BOX */
-        .demo-box {
-            background: #12141b;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-top: 2rem;
-        }
-
-        .demo-box input {
-            padding: 1rem;
-            width: 100%;
-            max-width: 600px;
-            border-radius: 8px;
-            border: none;
-            background: #1a1d25;
-            color: #fff;
-            margin-bottom: 1rem;
-        }
-
-        .demo-box pre {
-            background: #1a1d25;
-            padding: 1rem;
-            border-radius: 8px;
-            overflow-x: auto;
-        }
-
-        footer {
-            padding: 3rem 4rem;
-            opacity: 0.6;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-    </style>
+  #signalCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block;}
+  .signal-label{position:fixed;left:24px;bottom:16px;z-index:1;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-dim);opacity:0.55;pointer-events:none;}
+  .page{position:relative;z-index:1;}
+  header.hero{background:radial-gradient(ellipse 900px 500px at 15% 0%, rgba(74,154,165,0.14), transparent 60%);}
+</style>
 </head>
-
 <body>
 
-<div class="bg-geometry"></div>
+<canvas id="signalCanvas"></canvas>
+<div class="signal-label">Behavioural signal &middot; illustrative</div>
 
-<header>
-    <nav>
-        <a href="#overview">Overview</a>
-        <a href="#principles">Principles</a>
-        <a href="#demo">Live Demo</a>
-        <a href="#contact">Contact</a>
-    </nav>
-</header>
-
-<section class="hero">
-
-    <!-- Your exact ARIA Behavioural Intelligence lockup -->
-    <img src="ARIA-lockup.png" alt="ARIA Behavioural Intelligence" class="aria-lockup" />
-
-    <h1>Tamper‑Evident Audit Trails for Every Governed Decision</h1>
-    <p>ARIA captures compliance‑relevant evidence at the exact moment a decision is made—what happened, when, under which rules—and seals it with cryptographic integrity. If anything changes, you can see it.</p>
-
-    <a class="cta-btn" href="#contact">Talk to Us</a>
-</section>
-
-<div class="sphere"></div>
-
-<section id="overview">
-    <h2>What ARIA Is</h2>
-    <p>ARIA is a deterministic behavioural‑intelligence substrate for governed decisions. It observes operational and behavioural signals, evaluates them against transparent, versioned rules, and produces decisions with cryptographically verifiable audit records.</p>
-</section>
-
-<section id="principles">
-    <h2>Core Principles</h2>
-    <p>ARIA doesn’t replace your governance—it makes it observable, auditable, and tamper‑evident.</p>
-
-    <ul class="proof-list">
-        <li><strong>Records, doesn’t decide</strong> — ARIA captures and verifies evidence without making decisions itself.</li>
-        <li><strong>Tamper‑evident by construction</strong> — Every record is hashed and chained so any alteration becomes visible.</li>
-        <li><strong>Flags drift, doesn’t act</strong> — ARIA surfaces deviations but never auto‑corrects.</li>
-        <li><strong>Built for OEM licensing</strong> — ARIA integrates as an embedded audit spine inside governed workflows.</li>
+<div class="page">
+<nav>
+  <div class="wrap">
+    <div class="brand"><img src="/aria-logo-2.png" alt="ARIA"></div>
+    <ul>
+      <li><a href="#substrate">What ARIA is</a></li>
+      <li><a href="#what">What it does</a></li>
+      <li><a href="#proof">Live demo</a></li>
+      <li><a href="powered-by.html">Powered by ARIA</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
     </ul>
-</section>
+  </div>
+</nav>
 
-<div class="sphere"></div>
-
-<section id="demo">
-    <h2>Live SHA‑256 Hashing Demo</h2>
-    <p>Type any governed decision input and see its SHA‑256 hash generated in your browser using the Web Crypto API.</p>
-
-    <div class="demo-box">
-        <input id="hashInput" type="text" placeholder="Type a decision…" />
-        <pre id="hashOutput"></pre>
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Pre-customer &middot; Internally tested</div>
+    <h1 class="headline">A tamper-evident audit record for every <span class="accent">governed decision</span></h1>
+    <p class="sub">ARIA is designed to capture compliance-relevant evidence at the point of decision — what happened, when, under which rules, and that nothing was changed afterward — rather than reconstructing it after the fact.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="mailto:daniel.stokes@ariaengaged.co.uk">Get in touch</a>
+      <a class="btn btn-ghost" href="#proof">See the hash demo</a>
     </div>
 
-    <script>
-        const input = document.getElementById('hashInput');
-        const output = document.getElementById('hashOutput');
+    <div class="proof-card" id="proof">
+      <div class="proof-label">Live SHA-256 demonstration</div>
+      <div class="proof-row">
+        <input id="hashInput" type="text" placeholder="Type anything…" value="example governed decision">
+        <button onclick="doHash()">Hash it</button>
+      </div>
+      <div class="hash-out" id="hashOut">— output appears here —</div>
+      <p style="margin-top:10px;font-size:0.82rem;color:var(--ink-dim)">This runs entirely in your browser using the Web Crypto API — nothing is sent anywhere. It illustrates the same one-way, tamper-evident hashing principle ARIA applies to decision records, not ARIA itself.</p>
+    </div>
+  </div>
+</header>
 
-        async function hash(text) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(text);
-            const digest = await crypto.subtle.digest('SHA-256', data);
-            return Array.from(new Uint8Array(digest))
-                .map(b => b.toString(16).padStart(2, '0'))
-                .join('');
-        }
-
-        input.addEventListener('input', async () => {
-            output.textContent = input.value
-                ? await hash(input.value)
-                : '';
-        });
-    </script>
+<section id="substrate">
+  <div class="wrap">
+    <h2>What ARIA is</h2>
+    <p style="max-width:70ch;color:var(--ink-dim);font-size:1rem;">ARIA is a deterministic behavioural intelligence substrate — it observes operational and behavioural signals, evaluates them against transparent, versioned rules, and produces a governed decision together with a verifiable record of how that decision was reached. The same inputs always produce the same outputs, and the reasoning behind every decision is inspectable after the fact.</p>
+  </div>
 </section>
 
-<div class="sphere"></div>
-
-<section id="contact">
-    <h2>Let’s Build Tamper‑Evident Governance</h2>
-    <p>Ready to embed ARIA into your governed workflows?</p>
-    <a class="cta-btn" href="mailto:contact@ariaengaged.co.uk">Get in Touch</a>
+<section id="what">
+  <div class="wrap">
+    <h2>What it does</h2>
+    <div class="grid3">
+      <div class="card">
+        <h3>Records, doesn't decide</h3>
+        <p>ARIA is non-agentic. It captures and verifies evidence about governed decisions — it does not make those decisions itself.</p>
+      </div>
+      <div class="card">
+        <h3>Tamper-evident by construction</h3>
+        <p>Records are cryptographically hashed and can be anchored externally, so any after-the-fact alteration is detectable, not merely disallowed by policy.</p>
+      </div>
+      <div class="card">
+        <h3>Flags drift, doesn't act on it</h3>
+        <p>Part of that evaluation includes comparing current behaviour against an established baseline and surfacing meaningful deviation to a human reviewer — ARIA flags, it never acts automatically.</p>
+      </div>
+      <div class="card">
+        <h3>Built for OEM licensing</h3>
+        <p>Designed as a substrate other products integrate into their own governed workflows — not a standalone end-user application.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer>
-    © 2026 ARIA — Behavioural Intelligence Substrate
+  <div class="wrap">
+    ARIA EngagEd Ltd &middot; <a href="mailto:daniel.stokes@ariaengaged.co.uk">daniel.stokes@ariaengaged.co.uk</a> &middot; <a href="privacy.html">Privacy</a>
+  </div>
 </footer>
+
+</div>
+
+<script>
+async function doHash(){
+  const val = document.getElementById('hashInput').value;
+  const enc = new TextEncoder().encode(val);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  const hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  document.getElementById('hashOut').textContent = hex;
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  const canvas = document.getElementById('signalCanvas');
+  if (!canvas || typeof THREE === 'undefined') { if(canvas) canvas.style.display='none'; return; }
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const scene = new THREE.Scene();
+  let W = window.innerWidth, H = window.innerHeight;
+  const camera = new THREE.PerspectiveCamera(42, W/H, 0.1, 100);
+  camera.position.set(9, 5.5, 13);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(W, H);
+
+  // Brand gradient: teal -> cyan -> green
+  const cTeal = new THREE.Color(0x4a9aa5), cCyan = new THREE.Color(0x71bcc8), cGreen = new THREE.Color(0x67956e);
+  const cNavyGhost = new THREE.Color(0x1b3a3e);
+
+  const COUNT = 130;
+  const SPAN = 14;
+
+  function vortexPoint(t){
+    const turns = 2.1;
+    const theta = t * turns * Math.PI * 2;
+    const decay = 2.6;
+    const r = 5.2 * Math.exp(-decay * t);
+    return new THREE.Vector3(Math.cos(theta) * r, (t - 0.5) * 1.2, Math.sin(theta) * r);
+  }
+  function wavePoint(t){
+    const x = t * SPAN - SPAN/2;
+    const y = Math.sin(t * Math.PI * 4.2) * 1.9 * (0.35 + 0.65*Math.sin(t*Math.PI));
+    const z = Math.cos(t * Math.PI * 2.4) * 2.2;
+    return new THREE.Vector3(x, y, z);
+  }
+  function colorFor(t){
+    return t < 0.5 ? cTeal.clone().lerp(cCyan, t/0.5) : cCyan.clone().lerp(cGreen, (t-0.5)/0.5);
+  }
+  function easeInOutCubic(x){ return x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2,3)/2; }
+
+  const geo = new THREE.SphereGeometry(0.09, 12, 12);
+  const primary = [];
+  const vortexPts = [], wavePts = [];
+
+  for (let i = 0; i < COUNT; i++) {
+    const t = i / (COUNT - 1);
+    vortexPts.push(vortexPoint(t));
+    wavePts.push(wavePoint(t));
+    const mat = new THREE.MeshBasicMaterial({ color: colorFor(t), transparent:true, opacity:0.85 });
+    const sphere = new THREE.Mesh(geo, mat);
+    sphere.position.copy(vortexPts[i]);
+    sphere.scale.setScalar(0.55 + 0.55*Math.sin(t*Math.PI));
+    scene.add(sphere);
+    primary.push(sphere);
+  }
+
+  const ghostLayers = [];
+  if (!reduceMotion){
+    [0.14, 0.28].forEach((lag, gi) => {
+      const meshes = [];
+      for (let i = 0; i < COUNT; i++){
+        const t = i / (COUNT - 1);
+        const mat = new THREE.MeshBasicMaterial({ color: cNavyGhost, transparent:true, opacity: 0.12 - gi*0.04 });
+        const s = new THREE.Mesh(geo, mat);
+        s.position.copy(vortexPts[i]);
+        s.scale.setScalar((0.55 + 0.55*Math.sin(t*Math.PI)) * (0.9 - gi*0.15));
+        scene.add(s);
+        meshes.push(s);
+      }
+      ghostLayers.push({ lag, meshes });
+    });
+  }
+
+  const grid = new THREE.GridHelper(16, 16, 0x4a9aa5, 0x1b3a3e);
+  grid.position.y = -3;
+  grid.material.transparent = true;
+  grid.material.opacity = 0.08;
+  scene.add(grid);
+
+  function axisLine(dir, color){
+    const mat = new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.14 });
+    const points = [dir.clone().multiplyScalar(-8), dir.clone().multiplyScalar(8)];
+    const g = new THREE.BufferGeometry().setFromPoints(points);
+    return new THREE.Line(g, mat);
+  }
+  scene.add(axisLine(new THREE.Vector3(1,0,0), 0x71bcc8));
+  scene.add(axisLine(new THREE.Vector3(0,1,0), 0x67956e));
+  scene.add(axisLine(new THREE.Vector3(0,0,1), 0x4a9aa5));
+
+  function onResize(){
+    W = window.innerWidth; H = window.innerHeight;
+    camera.aspect = W/H; camera.updateProjectionMatrix();
+    renderer.setSize(W, H);
+  }
+  window.addEventListener('resize', onResize);
+
+  let visible = true;
+  document.addEventListener('visibilitychange', () => { visible = !document.hidden; });
+
+  const DURATION = 4200;
+  const start = performance.now();
+  let settledRotation = 0;
+
+  function setLayer(meshes, p){
+    const eased = easeInOutCubic(p);
+    for (let i = 0; i < COUNT; i++){
+      meshes[i].position.lerpVectors(vortexPts[i], wavePts[i], eased);
+    }
+  }
+
+  function animate(now){
+    requestAnimationFrame(animate);
+    if (!visible) return;
+
+    if (reduceMotion){
+      setLayer(primary, 1);
+      renderer.render(scene, camera);
+      return;
+    }
+
+    const elapsed = now - start;
+    const p = Math.min(1, elapsed / DURATION);
+    setLayer(primary, p);
+    ghostLayers.forEach(({lag, meshes}) => setLayer(meshes, Math.max(0, p - lag)));
+
+    if (p >= 1){
+      settledRotation += 0.0018;
+      scene.rotation.y = settledRotation;
+    }
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(animate);
+})();
+</script>
 
 </body>
 </html>
