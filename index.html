@@ -54,12 +54,14 @@
   /* Background Ghost Watermark */
   .ghost-watermark {
     position: fixed;
-    top: 50%;
+    top: 48%;
     left: 50%;
-    transform: translate(-50%, -50%) rotate(-4deg);
-    width: min(85vw, 920px);
-    opacity: 0.035;
-    filter: drop-shadow(0 0 40px rgba(113, 188, 200, 0.25)) grayscale(100%);
+    transform: translate(-50%, -50%);
+    width: min(90vw, 780px);
+    max-height: 70vh;
+    object-fit: contain;
+    opacity: 0.055;
+    filter: drop-shadow(0 0 50px rgba(113, 188, 200, 0.2));
     pointer-events: none;
     z-index: 0;
     mix-blend-mode: screen;
@@ -258,20 +260,21 @@
   .proof-row button:hover { opacity: 0.9; }
   .hash-box {
     margin-top: 14px;
-    padding: 12px 14px;
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px dashed rgba(113, 188, 200, 0.3);
+    padding: 10px 14px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px dashed rgba(113, 188, 200, 0.25);
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
   }
   .hash-out {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
+    font-size: clamp(0.68rem, 2.2vw, 0.8rem);
     color: var(--cyan);
     word-break: break-all;
+    line-height: 1.4;
   }
   .copy-btn {
     background: none;
@@ -319,10 +322,10 @@
     gap: 20px;
   }
   .card {
-    background: rgba(10, 15, 36, 0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(14, 21, 46, 0.55) 0%, rgba(8, 12, 28, 0.4) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(233, 242, 242, 0.08);
     border-radius: 12px;
     padding: 24px;
     transition: transform 0.2s ease, border-color 0.2s ease;
@@ -330,7 +333,7 @@
   .card:hover {
     transform: translateY(-2px);
     border-color: rgba(113, 188, 200, 0.25);
-    background: rgba(10, 15, 36, 0.7);
+    background: linear-gradient(180deg, rgba(18, 26, 56, 0.65) 0%, rgba(10, 15, 36, 0.5) 100%);
   }
   .card h3 {
     font-size: 1.1rem;
