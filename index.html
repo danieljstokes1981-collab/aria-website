@@ -176,19 +176,31 @@ async function doHash(){
   const scene = new THREE.Scene();
   let W = window.innerWidth, H = window.innerHeight;
   const camera = new THREE.PerspectiveCamera(42, W/H, 0.1, 100);
-  camera.position.set(9, 5.5, 13);
-  camera.lookAt(0, 0, 0);
+
+  function frameCamera(){
+    W = window.innerWidth; H = window.innerHeight;
+    const aspect = W / H;
+    // Wider span needs the camera pulled back further to still fit the shape.
+    const spanScale = SPAN / 14;
+    // Narrow/portrait screens need the camera pulled back much further,
+    // or the same world-space shape fills far more of the frame.
+    const zoomOut = (aspect < 1 ? (1 / aspect) * 1.15 : 1) * spanScale;
+    camera.position.set(9 * zoomOut, 5.5 * zoomOut, 13 * zoomOut);
+    camera.lookAt(0, 0, 0);
+    camera.aspect = aspect;
+    camera.updateProjectionMatrix();
+    renderer.setSize(W, H);
+  }
 
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(W, H);
 
   // Brand gradient: teal -> cyan -> green
   const cTeal = new THREE.Color(0x4a9aa5), cCyan = new THREE.Color(0x71bcc8), cGreen = new THREE.Color(0x67956e);
   const cNavyGhost = new THREE.Color(0x1b3a3e);
 
-  const COUNT = 130;
-  const SPAN = 14;
+  const COUNT = 170;
+  const SPAN = 24;
 
   function vortexPoint(t){
     const turns = 2.1;
@@ -208,7 +220,7 @@ async function doHash(){
   }
   function easeInOutCubic(x){ return x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2,3)/2; }
 
-  const geo = new THREE.SphereGeometry(0.09, 12, 12);
+  const geo = new THREE.SphereGeometry(0.055, 12, 12);
   const primary = [];
   const vortexPts = [], wavePts = [];
 
@@ -216,10 +228,10 @@ async function doHash(){
     const t = i / (COUNT - 1);
     vortexPts.push(vortexPoint(t));
     wavePts.push(wavePoint(t));
-    const mat = new THREE.MeshBasicMaterial({ color: colorFor(t), transparent:true, opacity:0.85 });
+    const mat = new THREE.MeshBasicMaterial({ color: colorFor(t), transparent:true, opacity:0.32 });
     const sphere = new THREE.Mesh(geo, mat);
     sphere.position.copy(vortexPts[i]);
-    sphere.scale.setScalar(0.55 + 0.55*Math.sin(t*Math.PI));
+    sphere.scale.setScalar(0.4 + 0.4*Math.sin(t*Math.PI));
     scene.add(sphere);
     primary.push(sphere);
   }
@@ -230,10 +242,10 @@ async function doHash(){
       const meshes = [];
       for (let i = 0; i < COUNT; i++){
         const t = i / (COUNT - 1);
-        const mat = new THREE.MeshBasicMaterial({ color: cNavyGhost, transparent:true, opacity: 0.12 - gi*0.04 });
+        const mat = new THREE.MeshBasicMaterial({ color: cNavyGhost, transparent:true, opacity: 0.06 - gi*0.02 });
         const s = new THREE.Mesh(geo, mat);
         s.position.copy(vortexPts[i]);
-        s.scale.setScalar((0.55 + 0.55*Math.sin(t*Math.PI)) * (0.9 - gi*0.15));
+        s.scale.setScalar((0.4 + 0.4*Math.sin(t*Math.PI)) * (0.9 - gi*0.15));
         scene.add(s);
         meshes.push(s);
       }
@@ -244,11 +256,11 @@ async function doHash(){
   const grid = new THREE.GridHelper(16, 16, 0x4a9aa5, 0x1b3a3e);
   grid.position.y = -3;
   grid.material.transparent = true;
-  grid.material.opacity = 0.08;
+  grid.material.opacity = 0.04;
   scene.add(grid);
 
   function axisLine(dir, color){
-    const mat = new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.14 });
+    const mat = new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.07 });
     const points = [dir.clone().multiplyScalar(-8), dir.clone().multiplyScalar(8)];
     const g = new THREE.BufferGeometry().setFromPoints(points);
     return new THREE.Line(g, mat);
@@ -257,12 +269,8 @@ async function doHash(){
   scene.add(axisLine(new THREE.Vector3(0,1,0), 0x67956e));
   scene.add(axisLine(new THREE.Vector3(0,0,1), 0x4a9aa5));
 
-  function onResize(){
-    W = window.innerWidth; H = window.innerHeight;
-    camera.aspect = W/H; camera.updateProjectionMatrix();
-    renderer.setSize(W, H);
-  }
-  window.addEventListener('resize', onResize);
+  frameCamera();
+  window.addEventListener('resize', frameCamera);
 
   let visible = true;
   document.addEventListener('visibilitychange', () => { visible = !document.hidden; });
