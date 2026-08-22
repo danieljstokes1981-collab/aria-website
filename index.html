@@ -63,6 +63,8 @@
   section h2{font-size:1.5rem;color:#fff;margin-bottom:20px;}
   .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
   .card{background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:20px;}
+  .card .icon{margin-bottom:14px;height:40px;}
+  .card .icon svg{height:100%;display:block;}
   .card h3{font-size:1.02rem;margin-bottom:8px;color:var(--cyan);}
   .card p{font-size:0.92rem;color:var(--ink-dim);}
 
@@ -128,18 +130,22 @@
     <h2>What it does</h2>
     <div class="grid3">
       <div class="card">
+        <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M9 9h6M9 13h4"/><circle cx="15" cy="16" r="2.4"/><path d="M17 18l2 2"/></svg></div>
         <h3>Records, doesn't decide</h3>
         <p>ARIA is non-agentic. It captures and verifies evidence about governed decisions — it does not make those decisions itself.</p>
       </div>
       <div class="card">
+        <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15l6-6"/><path d="M11 5.5l1.5-1.5a3.5 3.5 0 0 1 5 5L16 10.5"/><path d="M13 18.5L11.5 20a3.5 3.5 0 0 1-5-5L8 13.5"/></svg></div>
         <h3>Tamper-evident by construction</h3>
         <p>Records are cryptographically hashed and can be anchored externally, so any after-the-fact alteration is detectable, not merely disallowed by policy.</p>
       </div>
       <div class="card">
+        <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h13l-3 4 3 4H5"/></svg></div>
         <h3>Flags drift, doesn't act on it</h3>
         <p>Part of that evaluation includes comparing current behaviour against an established baseline and surfacing meaningful deviation to a human reviewer — ARIA flags, it never acts automatically.</p>
       </div>
       <div class="card">
+        <div class="icon" style="color:var(--cyan)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg></div>
         <h3>Built for OEM licensing</h3>
         <p>Designed as a substrate other products integrate into their own governed workflows — not a standalone end-user application.</p>
       </div>
