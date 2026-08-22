@@ -65,6 +65,18 @@
   .card{background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:20px;}
   .card .icon{margin-bottom:14px;height:40px;}
   .card .icon svg{height:100%;display:block;}
+
+  .scenario{background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:20px;}
+  .scenario h3{font-size:1.05rem;color:#fff;margin-bottom:18px;}
+  .flow-step{padding:12px 16px;border-left:3px solid var(--line);}
+  .flow-step .tag{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:4px;display:block;}
+  .flow-step p{margin:0;font-size:0.92rem;color:var(--ink);}
+  .flow-step.step-scenario{border-left-color:var(--ink-dim);}
+  .flow-step.step-aria{border-left-color:var(--teal);}
+  .flow-step.step-flag{border-left-color:var(--cyan);}
+  .flow-step.step-outcome{border-left-color:var(--green);}
+  .flow-arrow{padding:2px 0 2px 16px;color:var(--ink-dim);}
+  .flow-arrow svg{width:16px;height:16px;display:block;}
   .card h3{font-size:1.02rem;margin-bottom:8px;color:var(--cyan);}
   .card p{font-size:0.92rem;color:var(--ink-dim);}
 
@@ -90,6 +102,7 @@
       <li><a href="#substrate">What ARIA is</a></li>
       <li><a href="#what">What it does</a></li>
       <li><a href="#proof">Live demo</a></li>
+      <li><a href="#scenarios">How it responds</a></li>
       <li><a href="powered-by.html">Powered by ARIA</a></li>
       <li><a href="privacy.html">Privacy</a></li>
     </ul>
@@ -149,6 +162,34 @@
         <h3>Built for OEM licensing</h3>
         <p>Designed as a substrate other products integrate into their own governed workflows — not a standalone end-user application.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="scenarios">
+  <div class="wrap">
+    <h2>How it responds</h2>
+
+    <div class="scenario">
+      <h3>A returning user's behaviour changes</h3>
+      <div class="flow-step step-scenario"><span class="tag">Scenario</span><p>Behaviour diverges noticeably from the pattern ARIA has established for this entity.</p></div>
+      <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="flow-step step-aria"><span class="tag">ARIA</span><p>The new signal is compared against that established baseline.</p></div>
+      <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="flow-step step-flag"><span class="tag">Escalation</span><p>Meaningful deviation is flagged — not acted on automatically.</p></div>
+      <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="flow-step step-outcome"><span class="tag">Outcome</span><p>A human reviewer makes the call, with the comparison available to them.</p></div>
+    </div>
+
+    <div class="scenario">
+      <h3>A record is altered after the fact</h3>
+      <div class="flow-step step-scenario"><span class="tag">Scenario</span><p>Someone attempts to edit a governed decision's record after it was made.</p></div>
+      <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="flow-step step-aria"><span class="tag">ARIA</span><p>The record's hash no longer matches its original fingerprint.</p></div>
+      <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="flow-step step-flag"><span class="tag">Escalation</span><p>The mismatch is surfaced immediately, not discovered later.</p></div>
+      <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="flow-step step-outcome"><span class="tag">Outcome</span><p>The alteration is provably detectable — not merely disallowed by policy.</p></div>
     </div>
   </div>
 </section>
