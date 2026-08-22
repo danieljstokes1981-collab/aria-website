@@ -87,6 +87,7 @@
   footer a{color:var(--cyan);text-decoration:none;}
 
   #signalCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block;}
+  .brand-watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(85vw,950px);height:auto;opacity:0.10;z-index:0;pointer-events:none;}
   .signal-label{position:fixed;left:24px;bottom:16px;z-index:1;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-dim);opacity:0.55;pointer-events:none;}
   .page{position:relative;z-index:1;}
   header.hero{background:radial-gradient(ellipse 900px 500px at 15% 0%, rgba(74,154,165,0.32), transparent 65%);}
@@ -95,6 +96,7 @@
 <body>
 
 <canvas id="signalCanvas"></canvas>
+<img class="brand-watermark" src="/aria-watermark.png" alt="">
 <div class="signal-label">Behavioural signal &middot; illustrative</div>
 
 <div class="page">
