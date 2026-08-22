@@ -22,16 +22,13 @@
 <style>
   :root {
     --navy: #040714;
-    --navy-surface: #0a0f24;
     --deep-teal: #142a30;
     --teal: #4a9aa5;
     --cyan: #71bcc8;
-    --cyan-bright: #00f2fe;
     --green: #67956e;
     --ink: #e9f2f2;
     --ink-dim: #9fb3b5;
     --line: rgba(233, 242, 242, 0.08);
-    --line-glow: rgba(113, 188, 200, 0.25);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; overflow-x: hidden; }
@@ -97,13 +94,11 @@
     font-size: 0.82rem;
     font-weight: 600;
   }
-  .nav-btn:hover {
-    background: rgba(113, 188, 200, 0.2);
-  }
+  .nav-btn:hover { background: rgba(113, 188, 200, 0.2); }
 
   /* Hero Section */
   header.hero {
-    padding: 80px 0 64px;
+    padding: 72px 0 56px;
     position: relative;
   }
   .eyebrow {
@@ -130,7 +125,7 @@
   }
   h1.headline {
     font-size: clamp(2.2rem, 5vw, 3.4rem);
-    line-height: 1.1;
+    line-height: 1.12;
     color: #fff;
     max-width: 20ch;
   }
@@ -164,7 +159,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
     transition: all 0.2s ease;
   }
   .btn-primary {
@@ -192,6 +186,7 @@
     background: rgba(10, 15, 36, 0.75);
     border: 1px solid rgba(113, 188, 200, 0.18);
     backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-radius: 14px;
     padding: 24px 28px;
     box-shadow: 0 16px 40px rgba(0,0,0,0.4);
@@ -233,9 +228,7 @@
     outline: none;
     transition: border-color 0.2s ease;
   }
-  .proof-row input:focus {
-    border-color: var(--cyan);
-  }
+  .proof-row input:focus { border-color: var(--cyan); }
   .proof-row button {
     background: var(--teal);
     color: #03151a;
@@ -282,30 +275,8 @@
     border-color: var(--cyan);
   }
 
-  /* Metrics Ribbon */
-  .metrics-strip {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 18px;
-    margin: 40px 0;
-  }
-  .metric-item {
-    border-left: 2px solid var(--teal);
-    padding-left: 14px;
-  }
-  .metric-value {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #fff;
-  }
-  .metric-label {
-    font-size: 0.82rem;
-    color: var(--ink-dim);
-  }
-
   /* Section Styling */
-  section { padding: 64px 0; }
+  section { padding: 56px 0; }
   .section-tag {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
@@ -341,14 +312,8 @@
   }
   .card:hover {
     transform: translateY(-2px);
-    border-color: rgba(113, 188, 200, 0.2);
+    border-color: rgba(113, 188, 200, 0.25);
     background: rgba(255, 255, 255, 0.04);
-  }
-  .card-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--teal);
-    margin-bottom: 10px;
   }
   .card h3 {
     font-size: 1.1rem;
@@ -360,68 +325,6 @@
     color: var(--ink-dim);
     line-height: 1.55;
     margin: 0;
-  }
-
-  /* Interactive Architecture Tabs */
-  .arch-container {
-    background: rgba(10, 15, 36, 0.6);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 280px 1fr;
-  }
-  @media(max-width: 768px) {
-    .arch-container { grid-template-columns: 1fr; }
-  }
-  .arch-tabs {
-    background: rgba(0, 0, 0, 0.2);
-    border-right: 1px solid var(--line);
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .arch-tab {
-    padding: 12px 16px;
-    border-radius: 8px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--ink-dim);
-    background: transparent;
-    border: 1px solid transparent;
-    text-align: left;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .arch-tab.active {
-    background: rgba(113, 188, 200, 0.1);
-    color: var(--cyan);
-    border-color: rgba(113, 188, 200, 0.25);
-  }
-  .arch-content {
-    padding: 28px;
-  }
-  .arch-content h4 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.2rem;
-    color: #fff;
-    margin: 0 0 10px;
-  }
-  .arch-content p {
-    font-size: 0.95rem;
-    color: var(--ink-dim);
-    margin-bottom: 20px;
-  }
-  .arch-code-box {
-    background: #03050c;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 16px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--cyan);
-    overflow-x: auto;
   }
 
   /* Footer */
@@ -479,11 +382,12 @@
       <img src="/aria-logo-2.png" alt="ARIA">
     </a>
     <ul>
-      <li><a href="#substrate">Substrate</a></li>
-      <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#capabilities">Capabilities</a></li>
-      <li><a href="#proof">Hash Demo</a></li>
-      <li><a href="mailto:daniel.stokes@ariaengaged.co.uk" class="nav-btn">Request Access</a></li>
+      <li><a href="#substrate">What ARIA is</a></li>
+      <li><a href="#what">What it does</a></li>
+      <li><a href="#proof">Live Demo</a></li>
+      <li><a href="powered-by.html">Powered by ARIA</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="mailto:daniel.stokes@ariaengaged.co.uk" class="nav-btn">Get in touch</a></li>
     </ul>
   </div>
 </nav>
@@ -492,127 +396,67 @@
   <div class="wrap">
     <div class="eyebrow">
       <span class="eyebrow-pulse"></span>
-      Deterministic Behavioral Intelligence &middot; Non-Agentic
+      Pre-customer &middot; Internally tested
     </div>
     <h1 class="headline">A tamper-evident audit record for every <span class="accent">governed decision</span></h1>
-    <p class="sub">ARIA captures compliance-relevant evidence at the exact point of decision — proving what happened, when, under which rules, and certifying that nothing was altered after the fact.</p>
+    <p class="sub">ARIA is designed to capture compliance-relevant evidence at the point of decision — what happened, when, under which rules, and that nothing was changed afterward — rather than reconstructing it after the fact.</p>
     
     <div class="cta-row">
       <a class="btn btn-primary" href="mailto:daniel.stokes@ariaengaged.co.uk">Get in touch</a>
-      <a class="btn btn-ghost" href="#architecture">Explore the stack</a>
+      <a class="btn btn-ghost" href="#proof">See the hash demo</a>
     </div>
 
     <!-- Live Cryptographic Demo -->
     <div class="proof-card" id="proof">
       <div class="proof-header">
-        <span class="proof-label">Browser-Native SHA-256 Verification</span>
+        <span class="proof-label">Live SHA-256 Demonstration</span>
         <span class="proof-status" id="hashStatus">⬤ Ready</span>
       </div>
       <div class="proof-row">
-        <input id="hashInput" type="text" placeholder="Type a state or decision record..." value="decision:grant_policy_override:actor_402:timestamp_1740000000" oninput="doHash()">
-        <button onclick="doHash()">Generate Hash</button>
+        <input id="hashInput" type="text" placeholder="Type anything…" value="example governed decision" oninput="doHash()">
+        <button onclick="doHash()">Hash it</button>
       </div>
       <div class="hash-box">
         <div class="hash-out" id="hashOut">— output appears here —</div>
         <button class="copy-btn" onclick="copyHash()">Copy</button>
       </div>
-      <p style="margin: 12px 0 0; font-size: 0.8rem; color: var(--ink-dim);">
-        Executes locally via the Web Crypto API. Illustrates how ARIA deterministically binds and verifies decision records without external data transmission.
+      <p style="margin: 12px 0 0; font-size: 0.82rem; color: var(--ink-dim);">
+        This runs entirely in your browser using the Web Crypto API — nothing is sent anywhere. It illustrates the same one-way, tamper-evident hashing principle ARIA applies to decision records, not ARIA itself.
       </p>
-    </div>
-
-    <!-- Metrics Ribbon -->
-    <div class="metrics-strip">
-      <div class="metric-item">
-        <div class="metric-value">100%</div>
-        <div class="metric-label">Deterministic rule execution</div>
-      </div>
-      <div class="metric-item">
-        <div class="metric-value">0ms</div>
-        <div class="metric-label">After-the-fact reconstruction lag</div>
-      </div>
-      <div class="metric-item">
-        <div class="metric-value">Immutable</div>
-        <div class="metric-label">Cryptographically anchored records</div>
-      </div>
     </div>
   </div>
 </header>
 
 <section id="substrate">
   <div class="wrap">
-    <div class="section-tag">Substrate Foundation</div>
+    <div class="section-tag">Overview</div>
     <h2>What ARIA is</h2>
     <p class="section-lead">
-      ARIA is a deterministic behavioural intelligence substrate — observing operational signals, evaluating them against versioned policies, and producing a verifiable record of how every decision was reached.
+      ARIA is a deterministic behavioural intelligence substrate — it observes operational and behavioural signals, evaluates them against transparent, versioned rules, and produces a governed decision together with a verifiable record of how that decision was reached. The same inputs always produce the same outputs, and the reasoning behind every decision is inspectable after the fact.
     </p>
-
-    <div class="grid3">
-      <div class="card">
-        <div class="card-num">01 / SUBSTRATE</div>
-        <h3>Non-Agentic by Design</h3>
-        <p>ARIA captures, timestamps, and certifies operational evidence. It leaves agency with human operators and existing systems.</p>
-      </div>
-      <div class="card">
-        <div class="card-num">02 / CRYPTOGRAPHY</div>
-        <h3>Tamper-Evident Records</h3>
-        <p>Every state transition is cryptographically hashed, ensuring alterations are mathematically detectable rather than just policy-forbidden.</p>
-      </div>
-      <div class="card">
-        <div class="card-num">03 / DRIFT DETECTION</div>
-        <h3>Baseline Comparison</h3>
-        <p>Evaluates realtime behavioral signals against established baselines, surfacing meaningful drift to human operators without unprompted actions.</p>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- Layered Architecture Showcase -->
-<section id="architecture">
+<section id="what">
   <div class="wrap">
-    <div class="section-tag">System Design</div>
-    <h2>Substrate Architecture</h2>
-    <p class="section-lead">A layered, deterministic engine built for integration into existing governed workflows.</p>
-
-    <div class="arch-container">
-      <div class="arch-tabs">
-        <button class="arch-tab active" onclick="showArch(0)">Layer 1: Signal Ingestion</button>
-        <button class="arch-tab" onclick="showArch(1)">Layer 2: State Normalization</button>
-        <button class="arch-tab" onclick="showArch(2)">Layer 3: Policy Gate</button>
-        <button class="arch-tab" onclick="showArch(3)">Layer 4: Immutable Record</button>
-      </div>
-      <div class="arch-content" id="archContent">
-        <h4 id="archTitle">Layer 1: Signal Ingestion</h4>
-        <p id="archDesc">Captures live telemetry, user interactions, and environmental parameters without injecting latency into the operational host application.</p>
-        <div class="arch-code-box" id="archCode">
-{
-  "event": "signal_capture",
-  "source": "host_subsystem_auth",
-  "deterministic_state": true,
-  "telemetry_clock": 1740000000214
-}
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="capabilities">
-  <div class="wrap">
-    <div class="section-tag">Integration & Deployment</div>
-    <h2>OEM-Ready Integration</h2>
+    <div class="section-tag">Core Principles</div>
+    <h2>What it does</h2>
     <div class="grid3">
       <div class="card">
-        <h3>Drop-in Licensing</h3>
-        <p>Designed from first principles to be embedded into bespoke software environments, workflow engines, and enterprise software suites.</p>
+        <h3>Records, doesn't decide</h3>
+        <p>ARIA is non-agentic. It captures and verifies evidence about governed decisions — it does not make those decisions itself.</p>
       </div>
       <div class="card">
-        <h3>Inspectable Audit Trails</h3>
-        <p>Export full cryptographically provable histories for external audits, compliance validation, and regulatory filings.</p>
+        <h3>Tamper-evident by construction</h3>
+        <p>Records are cryptographically hashed and can be anchored externally, so any after-the-fact alteration is detectable, not merely disallowed by policy.</p>
       </div>
       <div class="card">
-        <h3>Zero Surfaceless Waste</h3>
-        <p>Low-overhead execution model engineered for strict latency budgets and critical operational infrastructures.</p>
+        <h3>Flags drift, doesn't act on it</h3>
+        <p>Part of that evaluation includes comparing current behaviour against an established baseline and surfacing meaningful deviation to a human reviewer — ARIA flags, it never acts automatically.</p>
+      </div>
+      <div class="card">
+        <h3>Built for OEM licensing</h3>
+        <p>Designed as a substrate other products integrate into their own governed workflows — not a standalone end-user application.</p>
       </div>
     </div>
   </div>
@@ -625,7 +469,7 @@
         <strong>ARIA EngagEd Ltd</strong> &middot; <a href="mailto:daniel.stokes@ariaengaged.co.uk">daniel.stokes@ariaengaged.co.uk</a>
       </div>
       <div>
-        <a href="powered-by.html">Powered by ARIA</a> &middot; <a href="privacy.html">Privacy Policy</a>
+        <a href="powered-by.html">Powered by ARIA</a> &middot; <a href="privacy.html">Privacy</a>
       </div>
     </div>
   </div>
@@ -634,12 +478,11 @@
 </div>
 
 <script>
-// SHA-256 Demo Functionality
 async function doHash(){
   const val = document.getElementById('hashInput').value;
   const status = document.getElementById('hashStatus');
   if(!val){
-    document.getElementById('hashOut').textContent = '— enter input above —';
+    document.getElementById('hashOut').textContent = '— output appears here —';
     status.textContent = '⬤ Idle';
     return;
   }
@@ -660,42 +503,7 @@ function copyHash(){
   }
 }
 
-// Initial hash execution
 doHash();
-
-// Interactive Architecture Tabs
-const archData = [
-  {
-    title: "Layer 1: Signal Ingestion",
-    desc: "Captures live telemetry, user interactions, and environmental parameters without injecting latency into the operational host application.",
-    code: `{\n  "event": "signal_capture",\n  "source": "host_subsystem_auth",\n  "deterministic_state": true,\n  "telemetry_clock": 1740000000214\n}`
-  },
-  {
-    title: "Layer 2: State Normalization",
-    desc: "Structures varied incoming operational vectors into deterministic, versioned input schemas prepared for governance validation.",
-    code: `{\n  "schema_version": "2.4.0",\n  "normalized_vector": [0.12, 0.94, 0.04, 1.0],\n  "entropy_check": "VALID"\n}`
-  },
-  {
-    title: "Layer 3: Policy Gate & Drift Evaluation",
-    desc: "Evaluates the normalized vector against immutable versioned rule tables, flagging baseline drift to human reviewers.",
-    code: `{\n  "rule_id": "POL_GOV_882",\n  "drift_detected": false,\n  "decision_vector": "ALLOW_PASS",\n  "action_required": "NONE"\n}`
-  },
-  {
-    title: "Layer 4: Immutable Record Generation",
-    desc: "Constructs a tamper-evident SHA-256 receipt binding the inputs, rule version, timestamp, and resulting decision state.",
-    code: `{\n  "record_id": "REC_98124_ARIA",\n  "digest": "8a54d99e03d4fb0e91129b0a7019672",\n  "tamper_evident": true\n}`
-  }
-];
-
-function showArch(index) {
-  const tabs = document.querySelectorAll('.arch-tab');
-  tabs.forEach((tab, i) => {
-    tab.classList.toggle('active', i === index);
-  });
-  document.getElementById('archTitle').textContent = archData[index].title;
-  document.getElementById('archDesc').textContent = archData[index].desc;
-  document.getElementById('archCode').textContent = archData[index].code;
-}
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
