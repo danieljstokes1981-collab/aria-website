@@ -3,21 +3,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ARIA — Tamper‑Evident Governed Decisions</title>
+    <title>ARIA — Behavioural Intelligence</title>
 
     <style>
-        /* GLOBAL */
         body {
             margin: 0;
             font-family: Inter, system-ui, sans-serif;
             background: #0b0d11;
             color: #ffffff;
             overflow-x: hidden;
-        }
-
-        a {
-            color: #6ea8ff;
-            text-decoration: none;
         }
 
         /* GEOMETRIC BACKGROUND */
@@ -31,11 +25,11 @@
                 linear-gradient(135deg, #0b0d11 0%, #12141b 100%);
         }
 
-        /* HEADER */
+        /* NAVIGATION */
         header {
             padding: 2rem 4rem;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
         }
 
@@ -43,34 +37,19 @@
             margin-left: 2rem;
             font-weight: 500;
             opacity: 0.9;
+            text-decoration: none;
+            color: #ffffff;
         }
 
         nav a:hover {
             opacity: 1;
         }
 
-        /* MASSIVE ARIA SYMBOL */
-        .aria-symbol {
-            width: 260px;
-            height: 260px;
-            margin-bottom: 2rem;
-            background: radial-gradient(circle at 30% 30%, #6ea8ff, #0b0d11);
-            border-radius: 50%;
-            position: relative;
-            box-shadow: 0 0 120px rgba(110,168,255,0.25);
-        }
-
-        .aria-symbol::after {
-            content: "ARIA";
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.2rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            color: #ffffff;
+        /* HERO BRAND LOCKUP */
+        .aria-lockup {
+            width: 360px;
+            margin: 0 auto 2rem;
+            display: block;
         }
 
         /* HERO */
@@ -104,6 +83,7 @@
             font-weight: 600;
             display: inline-block;
             transition: 0.2s ease;
+            text-decoration: none;
         }
 
         .cta-btn:hover {
@@ -164,7 +144,6 @@
             overflow-x: auto;
         }
 
-        /* FOOTER */
         footer {
             padding: 3rem 4rem;
             opacity: 0.6;
@@ -188,7 +167,9 @@
 </header>
 
 <section class="hero">
-    <div class="aria-symbol"></div>
+
+    <!-- Your exact ARIA Behavioural Intelligence lockup -->
+    <img src="ARIA-lockup.png" alt="ARIA Behavioural Intelligence" class="aria-lockup" />
 
     <h1>Tamper‑Evident Audit Trails for Every Governed Decision</h1>
     <p>ARIA captures compliance‑relevant evidence at the exact moment a decision is made—what happened, when, under which rules—and seals it with cryptographic integrity. If anything changes, you can see it.</p>
