@@ -85,6 +85,14 @@
 
   footer{padding:32px 0;border-top:1px solid var(--line);font-size:0.85rem;color:var(--ink-dim);}
   footer a{color:var(--cyan);text-decoration:none;}
+  footer .foot-links{margin-top:10px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
+
+  .domain-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+  .pill{font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.04em;color:var(--ink-dim);border:1px solid rgba(113,188,200,0.2);padding:6px 14px;border-radius:100px;background:rgba(255,255,255,0.03);}
+  .pill.demo{border-color:rgba(224,168,56,0.3);color:#e0a838;background:rgba(224,168,56,0.05);}
+  .section-cta{margin-top:22px;font-size:0.9rem;color:var(--ink-dim);}
+  .section-cta a{color:var(--cyan);text-decoration:none;}
+  .section-cta a:hover{text-decoration:underline;}
 
   #signalCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block;}
   .brand-watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(85vw,950px);height:auto;opacity:0.10;z-index:0;pointer-events:none;}
@@ -122,6 +130,7 @@
     <p class="sub">ARIA is designed to capture compliance-relevant evidence at the point of decision — what happened, when, under which rules, and that nothing was changed afterward — rather than reconstructing it after the fact.</p>
     <div class="cta-row">
       <a class="btn btn-primary" href="mailto:daniel.stokes@ariaengaged.co.uk">Get in touch</a>
+      <a class="btn btn-ghost" href="register-vertical.html">Register a vertical</a>
       <a class="btn btn-ghost" href="#proof">See the hash demo</a>
     </div>
 
@@ -172,6 +181,25 @@
   </div>
 </section>
 
+<section id="verticals">
+  <div class="wrap">
+    <h2>Domains with shipped taxonomy</h2>
+    <p style="max-width:70ch;color:var(--ink-dim);font-size:1rem;">ARIA ships with working signal definitions, regulatory mappings, and escalation tiers for these sectors. Each is a tested starting point — not a finished deployment, but a configuration your team can calibrate against your own obligations rather than building from scratch.</p>
+    <div class="domain-pills">
+      <span class="pill">Safeguarding &amp; Child Protection</span>
+      <span class="pill">Education &amp; Student Wellbeing</span>
+      <span class="pill">Financial Conduct &amp; Consumer Duty</span>
+      <span class="pill">Financial Crime &amp; Market Integrity</span>
+      <span class="pill">Healthcare &amp; Clinical Wellbeing</span>
+      <span class="pill">Online Platform Safety</span>
+      <span class="pill">Sport &amp; Performance Wellbeing</span>
+      <span class="pill">Workplace Wellbeing &amp; Occupational Health</span>
+      <span class="pill demo">Transmission Ecology &middot; demonstration</span>
+    </div>
+    <p class="section-cta">Not your sector? <a href="register-vertical.html">Register your vertical</a> and we'll scope a taxonomy with you. &nbsp;<a href="powered-by.html">Full capability detail →</a></p>
+  </div>
+</section>
+
 <section id="scenarios">
   <div class="wrap">
     <h2>How it responds</h2>
@@ -189,8 +217,13 @@
 </section>
 
 <footer>
-  <div class="wrap">
-    ARIA EngagEd Ltd &middot; <a href="mailto:daniel.stokes@ariaengaged.co.uk">daniel.stokes@ariaengaged.co.uk</a> &middot; <a href="privacy.html">Privacy</a>
+  <div class="wrap" style="text-align:center;">
+    ARIA EngagEd Ltd &middot; <a href="mailto:daniel.stokes@ariaengaged.co.uk">daniel.stokes@ariaengaged.co.uk</a>
+    <div class="foot-links">
+      <a href="powered-by.html">Powered by ARIA</a>
+      <a href="register-vertical.html">Register a vertical</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
   </div>
 </footer>
 
