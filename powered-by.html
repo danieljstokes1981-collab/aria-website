@@ -49,6 +49,20 @@
   footer{border-top:1px solid var(--line);padding:32px 0;text-align:center;font-size:0.85rem;color:var(--ink-dim);}
   footer a{margin:0 12px;}
   .fine{margin-top:16px;font-size:0.76rem;color:#5f6b6c;line-height:1.7;max-width:640px;margin-left:auto;margin-right:auto;}
+
+  .vertical-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px;}
+  @media(max-width:860px){.vertical-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:540px){.vertical-grid{grid-template-columns:1fr;}}
+  .vertical-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:20px 22px;}
+  .vertical-card .vc-status{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.06em;text-transform:uppercase;padding:4px 10px;border-radius:100px;margin-bottom:12px;}
+  .vc-status.shipped{color:#67956e;border:1px solid rgba(103,149,110,0.35);background:rgba(103,149,110,0.08);}
+  .vc-status.shipped::before{content:"";width:5px;height:5px;border-radius:50%;background:#67956e;}
+  .vc-status.demo{color:#e0a838;border:1px solid rgba(224,168,56,0.35);background:rgba(224,168,56,0.08);}
+  .vc-status.demo::before{content:"";width:5px;height:5px;border-radius:50%;background:#e0a838;}
+  .vertical-card h3{font-size:0.95rem;color:#fff;margin-bottom:6px;}
+  .vertical-card p{font-size:0.82rem;color:var(--ink-dim);margin:0 0 12px;line-height:1.55;}
+  .vc-tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .vc-tag{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--teal);border:1px solid rgba(74,154,165,0.25);padding:3px 8px;border-radius:4px;}
 </style>
 </head>
 <body>
@@ -61,6 +75,7 @@
       <li><a href="index.html#what">What it does</a></li>
       <li><a href="index.html#evidence">The record</a></li>
       <li><a href="powered-by.html" class="active">Powered by ARIA</a></li>
+      <li><a href="register-vertical.html">Register a vertical</a></li>
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
   </div>
@@ -90,6 +105,112 @@
 
     <div class="empty-slot">
       Further integrations will be listed here once they exist -- this space is intentionally empty for now.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-eyebrow">Substrate capabilities</div>
+    <h2>Shipped verticals</h2>
+    <p class="lede">ARIA ships with working taxonomy for these domains — configured signal definitions, regulatory mappings, and escalation tiers. Each vertical is a tested starting point, not a finished product. Deployment into a regulated context requires a scoping and calibration step with the operator.</p>
+
+    <div class="vertical-grid">
+
+      <div class="vertical-card">
+        <div class="vc-status shipped">Shipped</div>
+        <h3>Safeguarding &amp; Child Protection</h3>
+        <p>Behavioural signal monitoring for regulated environments with child protection obligations. Three escalation tiers: pastoral review, DSL escalation, and statutory reporting pathway.</p>
+        <div class="vc-tags">
+          <span class="vc-tag">Children Act 1989</span>
+          <span class="vc-tag">Working Together 2023</span>
+          <span class="vc-tag">KCSIE</span>
+        </div>
+      </div>
+
+      <div class="vertical-card">
+        <div class="vc-status shipped">Shipped</div>
+        <h3>Education &amp; Student Wellbeing</h3>
+        <p>Monitoring for schools, further education, and higher education supporting early intervention, pastoral care, and student wellbeing obligations.</p>
+        <div class="vc-tags">
+          <span class="vc-tag">Education Act</span>
+          <span class="vc-tag">OfSTED</span>
+        </div>
+      </div>
+
+      <div class="vertical-card">
+        <div class="vc-status shipped">Shipped</div>
+        <h3>Financial Conduct &amp; Consumer Duty</h3>
+        <p>Monitoring for FCA-regulated firms under Consumer Duty and SM&amp;CR. Surfaces vulnerability indicators, suitability gaps, and treating-customers-fairly signals.</p>
+        <div class="vc-tags">
+          <span class="vc-tag">FCA PS22/9</span>
+          <span class="vc-tag">Consumer Duty</span>
+          <span class="vc-tag">SM&amp;CR</span>
+        </div>
+      </div>
+
+      <div class="vertical-card">
+        <div class="vc-status shipped">Shipped</div>
+        <h3>Financial Crime &amp; Market Integrity</h3>
+        <p>SAR/AML/MAR monitoring with MLRO routing and tipping-off enforcement. Triggers for PEP flags, sanctions proximity, and market abuse indicators at MAR Article 16 thresholds.</p>
+        <div class="vc-tags">
+          <span class="vc-tag">POCA 2002</span>
+          <span class="vc-tag">MAR Art.16</span>
+          <span class="vc-tag">SMCR</span>
+        </div>
+      </div>
+
+      <div class="vertical-card">
+        <div class="vc-status shipped">Shipped</div>
+        <h3>Healthcare &amp; Clinical Wellbeing</h3>
+        <p>Clinical governance and patient safety monitoring for NHS trusts, mental health services, GP surgeries, and care providers.</p>
+        <div class="vc-tags">
+          <span class="vc-tag">CQC</span>
+          <span class="vc-tag">NHS framework</span>
+          <span class="vc-tag">Patient safety</span>
+        </div>
+      </div>
+
+      <div class="vertical-card">
+        <div class="vc-status shipped">Shipped</div>
+        <h3>Online Platform Safety</h3>
+        <p>Trust and safety monitoring for platforms subject to the Online Safety Act 2023. Supports content moderation triage and user safety obligations for Category 1 and 2A services.</p>
+        <div class="vc-tags">
+          <span class="vc-tag">Online Safety Act 2023</span>
+          <span class="vc-tag">Ofcom</span>
+        </div>
+      </div>
+
+      <div class="vertical-card">
+        <div class="vc-status shipped">Shipped</div>
+        <h3>Sport &amp; Performance Wellbeing</h3>
+        <p>Athlete welfare monitoring for elite sport, performance academies, and sporting organisations under UK Sport and Sport England duty of care frameworks.</p>
+        <div class="vc-tags">
+          <span class="vc-tag">UK Sport duty of care</span>
+          <span class="vc-tag">Sport England</span>
+        </div>
+      </div>
+
+      <div class="vertical-card">
+        <div class="vc-status shipped">Shipped</div>
+        <h3>Workplace Wellbeing &amp; Occupational Health</h3>
+        <p>Employee wellbeing monitoring supporting HR referral pathways and occupational health obligations under health and safety and equality legislation.</p>
+        <div class="vc-tags">
+          <span class="vc-tag">HSWA 1974</span>
+          <span class="vc-tag">Equality Act 2010</span>
+        </div>
+      </div>
+
+      <div class="vertical-card">
+        <div class="vc-status demo">Demonstration</div>
+        <h3>Transmission Ecology</h3>
+        <p>Anomaly detection on experimental virus transmission data. Calibrated against the Wallace &amp; Obbard (2024) empirical dataset — 606 individuals, 24 viruses, 3 Drosophila species. Demonstrates that ARIA processes real peer-reviewed data deterministically with a full audit record.</p>
+        <div class="vc-tags">
+          <span class="vc-tag">Proc. Royal Society B</span>
+          <span class="vc-tag">CC BY 4.0</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
