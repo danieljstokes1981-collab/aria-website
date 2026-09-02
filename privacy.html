@@ -21,7 +21,8 @@
   .wrap{max-width:780px;margin:0 auto;padding:0 24px;}
   nav{position:sticky;top:0;z-index:50;background:rgba(5,8,26,0.85);border-bottom:1px solid rgba(255,255,255,0.08);}
   nav .wrap{max-width:1120px;display:flex;align-items:center;justify-content:space-between;height:64px;}
-  nav a.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;text-decoration:none;}
+  nav a.brand{display:flex;align-items:center;text-decoration:none;}
+  nav a.brand img{height:34px;width:auto;display:block;}
   nav ul{list-style:none;display:flex;gap:24px;margin:0;padding:0;}
   nav a{text-decoration:none;color:var(--ink-dim);font-size:0.88rem;font-weight:500;}
   nav a:hover{color:var(--cyan);}
@@ -47,7 +48,7 @@
 <div class="page">
 <nav>
   <div class="wrap">
-    <a href="index.html" class="brand">ARIA</a>
+    <a href="index.html" class="brand"><img src="/aria-logo-2.png" alt="ARIA"></a>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="register-vertical.html">Register a vertical</a></li>
