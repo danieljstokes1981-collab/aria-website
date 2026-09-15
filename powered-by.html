@@ -4,254 +4,229 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Powered by ARIA - Behavioural Intelligence</title>
-  <link rel="stylesheet" href="style.css">
   <style>
-    :root {
-      --bg-main: #0b0f17;
-      --card-bg: #111622;
-      --border-line: #1e2638;
-      --text-bright: #ffffff;
-      --text-subtle: #94a3b8;
-      --brand-teal: #38bdf8;
-      --brand-green: #4ade80;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background-color: var(--bg-main);
-      color: var(--text-bright);
+      background-color: #0b0f17;
+      color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      margin: 0;
-      padding: 0;
       line-height: 1.6;
+      padding-bottom: 60px;
     }
-    .header-bar {
+    a { color: #38bdf8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    
+    .nav-bar {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 20px 40px;
-      border-bottom: 1px solid var(--border-line);
-      background: #080c13;
-    }
-    .brand-logo {
-      display: flex;
       align-items: center;
-      gap: 12px;
+      padding: 16px 32px;
+      background-color: #080c13;
+      border-bottom: 1px solid #1e2638;
     }
-    .brand-text {
-      font-size: 1.5rem;
+    .brand-title {
+      font-size: 1.4rem;
       font-weight: 800;
       letter-spacing: 0.05em;
-      background: linear-gradient(135deg, var(--brand-teal), var(--brand-green));
+      background: linear-gradient(135deg, #38bdf8, #4ade80);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .brand-subhead {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      color: var(--text-subtle);
-      text-transform: uppercase;
+    .brand-sub {
       display: block;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: #94a3b8;
+      text-transform: uppercase;
     }
-    .nav-links a {
-      color: var(--text-subtle);
-      text-decoration: none;
-      margin-left: 20px;
-      font-size: 0.9rem;
-    }
-    .nav-links a.active {
-      color: var(--brand-teal);
-      font-weight: 600;
-    }
-    .main-wrapper {
-      position: relative;
-      max-width: 1100px;
+    .nav-links { display: flex; gap: 20px; }
+    .nav-links a { color: #94a3b8; font-size: 0.85rem; }
+    .nav-links a.active { color: #38bdf8; font-weight: 600; }
+
+    .container {
+      max-width: 1050px;
       margin: 0 auto;
-      padding: 60px 20px;
-      overflow: hidden;
+      padding: 40px 20px;
+      position: relative;
     }
-    /* ARIA Watermark background element */
-    .main-wrapper::before {
+    /* Background watermark effect */
+    .container::before {
       content: "";
       position: absolute;
-      top: 5%;
-      right: -5%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, rgba(11, 15, 23, 0) 70%);
+      top: 0;
+      right: 0;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.07) 0%, rgba(11, 15, 23, 0) 70%);
       pointer-events: none;
-      z-index: 0;
     }
-    .content-layer {
-      position: relative;
-      z-index: 1;
-    }
-    .tag-pill {
+
+    .badge-pill {
       display: inline-block;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
+      font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--brand-teal);
+      color: #38bdf8;
       background: rgba(56, 189, 248, 0.1);
       border: 1px solid rgba(56, 189, 248, 0.25);
       padding: 3px 10px;
       border-radius: 12px;
       margin-bottom: 16px;
     }
-    h1 {
-      font-size: 2.8rem;
-      margin: 0 0 16px 0;
-      font-weight: 700;
-    }
-    .lead-p {
-      color: var(--text-subtle);
-      font-size: 1.1rem;
-      max-width: 850px;
+
+    h1 { font-size: 2.5rem; margin-bottom: 12px; font-weight: 700; }
+    .hero-desc { color: #94a3b8; font-size: 1.05rem; max-width: 850px; margin-bottom: 40px; }
+
+    .section-label { font-size: 0.72rem; letter-spacing: 0.12em; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px; }
+    .section-heading { font-size: 1.5rem; margin-bottom: 12px; }
+    .section-subtext { color: #94a3b8; font-size: 0.95rem; margin-bottom: 24px; max-width: 850px; }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
       margin-bottom: 50px;
     }
-    .section-header {
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      color: var(--text-subtle);
-      text-transform: uppercase;
-      margin-bottom: 8px;
+
+    .card {
+      background: #111622;
+      border: 1px solid #1e2638;
+      border-radius: 8px;
+      padding: 24px;
+      position: relative;
     }
-    .section-title {
-      font-size: 1.6rem;
-      margin-top: 0;
-      margin-bottom: 24px;
-    }
-    .grid-layout {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-      margin-bottom: 60px;
-    }
-    .card-box {
-      background: var(--card-bg);
-      border: 1px solid var(--border-line);
-      border-radius: 10px;
-      padding: 28px;
-      transition: border-color 0.2s ease;
-    }
-    .card-box:hover {
-      border-color: rgba(56, 189, 248, 0.4);
-    }
-    .card-status {
+    .card:hover { border-color: rgba(56, 189, 248, 0.4); }
+
+    .status-tag {
       display: inline-block;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 700;
       color: #f59e0b;
       background: rgba(245, 158, 11, 0.1);
       border: 1px solid rgba(245, 158, 11, 0.3);
       padding: 2px 8px;
       border-radius: 4px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       text-transform: uppercase;
     }
-    .card-status.shipped {
-      color: var(--brand-teal);
+    .status-tag.shipped {
+      color: #38bdf8;
       background: rgba(56, 189, 248, 0.1);
       border-color: rgba(56, 189, 248, 0.3);
     }
-    .card-box h3 {
-      font-size: 1.35rem;
-      margin: 0 0 6px 0;
-    }
-    .card-box .subtitle {
-      font-size: 0.85rem;
-      color: var(--brand-teal);
-      margin-bottom: 14px;
-      font-weight: 500;
-    }
-    .card-box p {
-      font-size: 0.92rem;
-      color: var(--text-subtle);
-      margin: 0;
-      line-height: 1.55;
+
+    .card h3 { font-size: 1.25rem; margin-bottom: 4px; color: #ffffff; }
+    .card .subtitle { font-size: 0.82rem; color: #38bdf8; margin-bottom: 12px; font-weight: 500; }
+    .card p { font-size: 0.9rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+    .disclaimer {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #1e2638;
+      font-size: 0.8rem;
+      color: #64748b;
     }
   </style>
 </head>
 <body>
 
-  <header class="header-bar">
-    <div class="brand-logo">
-      <div>
-        <span class="brand-text">ARIA</span>
-        <span class="brand-subhead">BEHAVIOURAL INTELLIGENCE</span>
-      </div>
+  <nav class="nav-bar">
+    <div>
+      <span class="brand-title">ARIA</span>
+      <span class="brand-sub">BEHAVIOURAL INTELLIGENCE</span>
     </div>
-    <nav class="nav-links">
+    <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="what-it-does.html">What it does</a>
       <a href="the-record.html">The record</a>
       <a href="powered-by.html" class="active">Powered by ARIA</a>
       <a href="register.html">Register a vertical</a>
       <a href="contact.html">Contact</a>
-    </nav>
-  </header>
+    </div>
+  </nav>
 
-  <main class="main-wrapper">
-    <div class="content-layer">
-      <span class="tag-pill">IN THE PIPELINE</span>
-      <h1>Powered by ARIA</h1>
-      <p class="lead-p">This page tracks products being built on top of the ARIA substrate. Nothing listed here is a live, certified, or completed integration -- these are early-stage builds, shown honestly as work in progress, not finished claims.</p>
+  <div class="container">
+    <span class="badge-pill">IN THE PIPELINE</span>
+    <h1>Powered by ARIA</h1>
+    <p class="hero-desc">This page tracks products being built on top of the ARIA substrate. Nothing listed here is a live, certified, or completed integration -- these are early-stage builds, shown honestly as work in progress, not finished claims.</p>
 
-      <div class="section-header">IN DEVELOPMENT</div>
-      <h2 class="section-title">What’s currently being built</h2>
+    <div class="section-label">IN DEVELOPMENT</div>
+    <h2 class="section-heading">What’s currently being built</h2>
+    <p class="section-subtext">ARIA is a component -- a substrate other products integrate underneath their own name. This page exists so that relationship is visible and accurately described, not folded into ARIA’s own product claims.</p>
 
-      <div class="grid-layout">
-        <div class="card-box">
-          <span class="card-status">EARLY DEVELOPMENT</span>
-          <h3>EngagEd</h3>
-          <div class="subtitle">Ed-tech / safeguarding product built on ARIA</div>
-          <p>An ed-tech / safeguarding product being built to sit on top of ARIA's record-generation layer. Not yet a certified integration, not yet deployed, and not part of ARIA's own tested scope -- It's a separate product under separate development, at an early stage.</p>
-        </div>
-
-        <div class="card-box">
-          <span class="card-status">EARLY DEVELOPMENT</span>
-          <h3>3Venture</h3>
-          <div class="subtitle">Enterprise control plane & visual dashboard</div>
-          <p>3Venture operates as the primary enterprise control plane and visual dashboard substrate for the ARIA ecosystem. It ingests real-time cryptographic audit logs and telemetry feeds to provide centralized multi-layer governance oversight. The platform enables non-technical administrators to monitor deterministic agent state compliance across active operational environments.</p>
-        </div>
-
-        <div class="card-box">
-          <span class="card-status">EARLY DEVELOPMENT</span>
-          <h3>NABU</h3>
-          <div class="subtitle">Early signal pattern recognition tool</div>
-          <p>NABU operates as a deterministic early signal pattern recognition tool built directly on the ARIA substrate. It ingests complex multi-source data streams to detect pre-incident anomaly signatures and regulatory divergence before threshold breach occurs. By mapping early behavioral telemetry against verified policy invariants, NABU delivers real-time risk intelligence without speculative model drift.</p>
-        </div>
-
-        <div class="card-box">
-          <span class="card-status">EARLY DEVELOPMENT</span>
-          <h3>Qer</h3>
-          <div class="subtitle">Continuous quality, risk, and evidence verification</div>
-          <p>Qer functions as a continuous quality, risk, and evidence verification engine that monitors operational agent outputs. It evaluates state transitions against predefined behavioral bounds to construct tamper-evident cryptographic proofs. System operators rely on Qer to deliver real-time auditability and deterministic verification across all critical data workflows.</p>
-        </div>
+    <div class="grid-container">
+      <div class="card">
+        <span class="status-tag">EARLY DEVELOPMENT</span>
+        <h3>EngagEd</h3>
+        <div class="subtitle">Ed-tech / safeguarding product built on ARIA</div>
+        <p>An ed-tech / safeguarding product being built to sit on top of ARIA's record-generation layer. Not yet a certified integration, not yet deployed, and not part of ARIA's own tested scope -- It's a separate product under separate development, at an early stage.</p>
+        <div class="disclaimer">ARIA does not claim EngagEd's outcomes as its own, and EngagEd's use of ARIA has not itself been independently verified. This listing exists for transparency about the relationship, not as a completed case study.</div>
       </div>
 
-      <div class="section-header">SUBSTRATE CAPABILITIES</div>
-      <h2 class="section-title">Shipped verticals</h2>
+      <div class="card">
+        <span class="status-tag">EARLY DEVELOPMENT</span>
+        <h3>3Venture</h3>
+        <div class="subtitle">Enterprise control plane & visual dashboard</div>
+        <p>3Venture operates as the primary enterprise control plane and visual dashboard substrate for the ARIA ecosystem. It ingests real-time cryptographic audit logs and telemetry feeds to provide centralized multi-layer governance oversight. The platform enables non-technical administrators to monitor deterministic agent state compliance across active operational environments.</p>
+      </div>
 
-      <div class="grid-layout">
-        <div class="card-box">
-          <span class="card-status shipped">SHIPPED</span>
-          <h3>Safeguarding & Child Protection</h3>
-          <p>Behavioural signal monitoring for regulated environments with child protection obligations. Three escalation tiers: pastoral review, DSL escalation, and statutory reporting pathway.</p>
-        </div>
+      <div class="card">
+        <span class="status-tag">EARLY DEVELOPMENT</span>
+        <h3>NABU</h3>
+        <div class="subtitle">Early signal pattern recognition tool</div>
+        <p>NABU operates as a deterministic early signal pattern recognition tool built directly on the ARIA substrate. It ingests complex multi-source data streams to detect pre-incident anomaly signatures and regulatory divergence before threshold breach occurs. By mapping early behavioral telemetry against verified policy invariants, NABU delivers real-time risk intelligence without speculative model drift.</p>
+      </div>
 
-        <div class="card-box">
-          <span class="card-status shipped">SHIPPED</span>
-          <h3>Education & Student Wellbeing</h3>
-          <p>Monitoring for schools, further education, and higher education supporting early intervention, pastoral care, and student wellbeing obligations.</p>
-        </div>
-
-        <div class="card-box">
-          <span class="card-status shipped">SHIPPED</span>
-          <h3>Financial Conduct & Consumer Duty</h3>
-          <p>Monitoring for FCA-regulated firms under Consumer Duty and SM&CR. Surfaces vulnerability indicators, suitability gaps, and treating-customers-fairly signals.</p>
-        </div>
+      <div class="card">
+        <span class="status-tag">EARLY DEVELOPMENT</span>
+        <h3>Qer</h3>
+        <div class="subtitle">Continuous quality, risk, and evidence verification</div>
+        <p>Qer functions as a continuous quality, risk, and evidence verification engine that monitors operational agent outputs. It evaluates state transitions against predefined behavioral bounds to construct tamper-evident cryptographic proofs. System operators rely on Qer to deliver real-time auditability and deterministic verification across all critical data workflows.</p>
       </div>
     </div>
-  </main>
+
+    <div class="section-label">SUBSTRATE CAPABILITIES</div>
+    <h2 class="section-heading">Shipped verticals</h2>
+    <p class="section-subtext">ARIA ships with working taxonomy for these domains -- configured signal definitions, regulatory mappings, and escalation tiers. Each vertical is a tested starting point, not a finished product. Deployment into a regulated context requires a scoping and calibration step with the operator.</p>
+
+    <div class="grid-container">
+      <div class="card">
+        <span class="status-tag shipped">SHIPPED</span>
+        <h3>Safeguarding & Child Protection</h3>
+        <p>Behavioural signal monitoring for regulated environments with child protection obligations. Three escalation tiers: pastoral review, DSL escalation, and statutory reporting pathway.</p>
+      </div>
+
+      <div class="card">
+        <span class="status-tag shipped">SHIPPED</span>
+        <h3>Education & Student Wellbeing</h3>
+        <p>Monitoring for schools, further education, and higher education supporting early intervention, pastoral care, and student wellbeing obligations.</p>
+      </div>
+
+      <div class="card">
+        <span class="status-tag shipped">SHIPPED</span>
+        <h3>Financial Conduct & Consumer Duty</h3>
+        <p>Monitoring for FCA-regulated firms under Consumer Duty and SM&CR. Surfaces vulnerability indicators, suitability gaps, and treating-customers-fairly signals.</p>
+      </div>
+
+      <div class="card">
+        <span class="status-tag shipped">SHIPPED</span>
+        <h3>Financial Crime & Market Integrity</h3>
+        <p>SAR/AML/MAR monitoring with MLRO routing and tipping-off enforcement.</p>
+      </div>
+
+      <div class="card">
+        <span class="status-tag shipped">SHIPPED</span>
+        <h3>Healthcare & Clinical Wellbeing</h3>
+        <p>Clinical governance and patient safety monitoring for NHS trusts, mental health.</p>
+      </div>
+
+      <div class="card">
+        <span class="status-tag shipped">SHIPPED</span>
+        <h3>Online Platform Safety</h3>
+        <p>Trust and safety monitoring for platforms subject to the Online Safety Act 2023.</p>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
